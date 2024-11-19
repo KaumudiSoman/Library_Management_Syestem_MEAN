@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" *ngIf="authService.user$ | async">
+  <div class="container">
+    <a class="navbar-brand">BookScout</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+      aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" routerLink="/" *ngIf="authService.user$ | async">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/explore" *ngIf="authService.user$ | async">Explore</a>
+        </li>
+      </ul>
+
+      <div class="dropdown" dropdown *ngIf="(authService.user$ | async) as currentUser">
+        <a class="dropdown-toggle text-light text-decoration-none" dropdownToggle>
+          Welcome {{currentUser.username}}</a>
+        <div class="dropdown-menu" *dropdownMenu>
+          <a class="dropdown-item" routerLink="/wishlist">Wishlist</a>
+          <a class="dropdown-item" routerLink="/bookshelf">Bookshelf</a>
+          <a class="dropdown-item" (click)="logout()">Log Out</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

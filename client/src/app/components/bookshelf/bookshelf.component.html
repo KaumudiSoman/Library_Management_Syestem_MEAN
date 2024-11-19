@@ -1,0 +1,26 @@
+<div class="container text-center">
+    <div *ngFor="let book of borrowedBooks" class="books-container">
+        <div class="book-tile">
+            <div class="book-img">
+                <img [src]="'../../../../../assets/images/book-cover.gif'" alt="Thumbnail not available">
+            </div>
+            <div class="book-info">
+                <h4>{{book._id}}</h4>
+                <h6>Issued at {{book.issuedTimestamp}}</h6>
+                <h6>Due at {{book.dueDate}}</h6>
+                <h6 *ngIf="book.status === 'RETURNED'">Returned at {{book.returnTimestamp}}</h6>
+                <p>{{book.status}}</p>
+                <div class="buttons">
+                    <button type="button" class="btn btn-link">View Details</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center mt-3">
+        <!-- <pagination [boundaryLinks]="true" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [maxSize]="10"
+            previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" (pageChanged)="pageChanged($event)">
+        </pagination> -->
+    </div>
+</div>
+<div class="container text-center" *ngIf="!borrowedBooks || borrowedBooks.length === 0">Bookshelf is empty</div>
