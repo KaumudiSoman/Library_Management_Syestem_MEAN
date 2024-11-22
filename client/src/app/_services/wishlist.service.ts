@@ -1,34 +1,27 @@
-import { inject, Injectable } from '@angular/core';
-import { Book } from '../_models/BookDataModels';
-import { from, map, Observable } from 'rxjs';
-import { Firestore, collection, collectionData, addDoc, deleteDoc, doc } from '@angular/fire/firestore';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { APIResources } from '../app.constants';
+import { UtilService } from './util.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WishlistService {
-  firestore = inject(Firestore);
-  wishlistCollection = collection(this.firestore, 'wishlist');
+  
+  constructor(private http: HttpClient, private utilService: UtilService) { }
 
-  getWishlist(userId: string): Observable<Book[]> {
-    return collectionData(collection(this.firestore, `wishlist_${userId}`), {idField: 'id',}) as Observable<Book[]>;
+  getWishlist() {
+    const headers = this.utilService.setAuthHeader();
+    return this.http.get(APIResources.baseUrl + APIResources.wishlist, {headers});
   }
 
-  addToWishlist(book: Book, userId: string) {
-    // const addBook = {bookId: book.bookId, 
-    //   title: book.title, 
-    //   subtitle: book.subtitle, 
-    //   author: book.author, 
-    //   publisher: book.publisher, 
-    //   thumbnail: book.thumbnail
-    // };
-    // const promise = addDoc(collection(this.firestore, `wishlist_${userId}`), addBook).then((response) => response.id);
-    // return from(promise);
+  addToWishlist() {
+    const headers = this.utilService.setAuthHeader();
+    return this.http.post(APIResources.baseUrl + APIResources.wishlist, {headers});
   }
 
-  deleteFromWishlist(id: string, userId: string): Observable<void> {
-    const docRef = doc(this.firestore, `wishlist_${userId}/` + id);
-    const promise = deleteDoc(docRef);
-    return from(promise);
+  deleteFromWishlist(bookId: string) {
+    const headers = this.utilService.setAuthHeader();
+    return this.http.delete(APIResources.baseUrl + APIResources.wishlist + `/${bookId}`, {headers});
   }
 }

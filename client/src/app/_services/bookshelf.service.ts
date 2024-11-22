@@ -19,13 +19,13 @@ export class BookshelfService {
     return this.http.get(APIResources.baseUrl + APIResources.mybooks, {headers});
   }
 
-  borrowBook(book: Book) {
+  borrowBook(bookId: string) {
     const headers = this.utilService.setAuthHeader();
-    return this.http.post(APIResources.baseUrl + APIResources.borrowAndReturn, {headers});
+    return this.http.post(APIResources.baseUrl + APIResources.borrow + `/${bookId}`, {headers});
   }
 
   returnBook(bookId: string) {
     const headers = this.utilService.setAuthHeader();
-    return this.http.post(APIResources.baseUrl + APIResources.borrowAndReturn + `/${bookId}`, {headers});
+    return this.http.post(APIResources.baseUrl + APIResources.return + `/${bookId}`, {headers});
   }
 }

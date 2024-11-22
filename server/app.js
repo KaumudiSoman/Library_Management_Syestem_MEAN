@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const bookRouter = require('./routes/bookRoutes');
 const userRouter = require('./routes/userRoutes');
 const borrowHistoryRouter = require('./routes/borrowHistoryRoutes');
+const wishlistRouter = require('./routes/wishlistRoutes');
 const authController = require('./controllers/authController');
 
 const app = express();
@@ -32,6 +33,7 @@ app.get('/', authController.protect, (req, res) => {
 app.use('/api/books', bookRouter);
 app.use('/api/users', userRouter);
 app.use('/api/mybooks', borrowHistoryRouter);
+app.use('/api/wishlist', wishlistRouter);
 
 app.all('*', (req, res) => {
     res.status(404).json({

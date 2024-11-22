@@ -7,10 +7,13 @@ export const APIResources = {
     logout: '/logout',
 
     books: '/books',
-    getAndCreateBooks: '/',
+    // getAndCreateBooks: '/',
 
     mybooks: '/mybooks',
-    borrowAndReturn: '/',
+    borrow: '/borrow',
+    return: '/return',
+
+    wishlist: '/wishlist',
 
     q: '?q=',
     projection: '&projection=lite',
