@@ -5,9 +5,11 @@ const authController = require('./../controllers/authController');
 const router = express.Router();
 
 router.route('/')
-    .get(authController.protect, wishListController.getWishlist)
-    .post(authController.protect, wishListController.createWishlistRecord);
+    .get(authController.protect, wishListController.getWishlist);
+    // .post(authController.protect, wishListController.createWishlistRecord);
 
-router.route('/:id').delete(authController.protect, wishListController.deleteWishlistRecord);
+router.route('/:id')
+    .post(authController.protect, wishListController.createWishlistRecord)
+    .delete(authController.protect, wishListController.deleteWishlistRecord);
 
 module.exports = router;

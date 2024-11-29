@@ -1,17 +1,20 @@
 <div class="container text-center">
-    <div *ngFor="let book of borrowedBooks" class="books-container">
+    <div *ngFor="let book of books" class="books-container">
         <div class="book-tile">
             <div class="book-img">
                 <img [src]="'../../../../../assets/images/book-cover.gif'" alt="Thumbnail not available">
             </div>
             <div class="book-info">
-                <h4>{{book._id}}</h4>
-                <h6>Issued at {{book.issuedTimestamp}}</h6>
-                <h6>Due at {{book.dueDate}}</h6>
-                <h6 *ngIf="book.status === 'RETURNED'">Returned at {{book.returnTimestamp}}</h6>
-                <p>{{book.status}}</p>
+                <h4>{{book.title}} <span class="author-name">by {{book.author}}</span></h4>
+                <h6>Issued at: {{book.issuedTimestamp}}</h6>
+                <h6>Due at: {{book.dueDate}}</h6>
+                <h6 *ngIf="book.status === 'RETURNED'">Returned at: {{book.returnTimestamp}}</h6>
+                <p>Status: {{book.status}}</p>
+                <div class="buttons" *ngIf="book.status !== 'RETURNED'">
+                    <button class="btn btn-success" (click)="returnBook(book._id)">Return</button>
+                </div>
                 <div class="buttons">
-                    <button type="button" class="btn btn-link">View Details</button>
+                    <button class="btn btn-link" (click)="gotoBookDetail(book._id)">View Details</button>
                 </div>
             </div>
         </div>

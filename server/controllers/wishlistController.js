@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const Wishlist = require('./../models/wishlistModel');
 
 exports.getWishlist = async(req, res) => {
@@ -27,7 +28,7 @@ exports.getWishlist = async(req, res) => {
 exports.createWishlistRecord = async (req, res) => {
     try {
         const newBook = await Wishlist.create({
-            bookId: req.body.bookId,
+            bookId: req.params.id,
             userId: req.user.id
         });
 
@@ -45,8 +46,10 @@ exports.createWishlistRecord = async (req, res) => {
 }
 
 exports.deleteWishlistRecord = async (req, res) => {
+    // const bookId = new mongoose.Types.ObjectId(req.params.id);
     try {
-        const book = await Wishlist.findByIdAndDelete(req.params.id);
+        console.log(req.params.id)
+        const book = await Wishlist.findOneAndDelete({ bookId: req.params.id });
 
         if(!book) {
             return res.status(404).json({

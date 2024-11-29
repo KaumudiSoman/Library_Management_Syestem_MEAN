@@ -8,11 +8,11 @@
               </div>
               <div class="actions mb-3 mt-4">
                 <div class="action">
-                  <button class="btn btn-outline-secondary mb-2" (click)="addToBookshelf()"><i class="fa fa-check"></i></button>
+                  <button class="btn btn-outline-secondary mb-2" (click)="borrow(book._id)"><i class="fa fa-check"></i></button>
                   <div>Borrow</div>
                 </div>
                 <div class="action">
-                  <button class="btn btn-outline-secondary mb-2" (click)="addToWishlist()"><i class="fa fa-bookmark"></i></button>
+                  <button class="btn btn-outline-secondary mb-2" (click)="addToWishlist(book._id)"><i class="fa fa-bookmark"></i></button>
                   <div>Wishlist</div>
                 </div>
               </div>

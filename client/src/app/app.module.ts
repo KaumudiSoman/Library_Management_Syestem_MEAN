@@ -43,7 +43,7 @@ import { BookshelfComponent } from './components/bookshelf/bookshelf.component';
     BookDetailComponent,
     // VerifyEmailComponent,
     // ForgotPasswordComponent,
-    // WishlistComponent,
+    WishlistComponent,
     BookshelfComponent
   ],
   imports: [

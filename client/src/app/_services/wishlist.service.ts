@@ -15,9 +15,9 @@ export class WishlistService {
     return this.http.get(APIResources.baseUrl + APIResources.wishlist, {headers});
   }
 
-  addToWishlist() {
+  addToWishlist(bookId: string) {
     const headers = this.utilService.setAuthHeader();
-    return this.http.post(APIResources.baseUrl + APIResources.wishlist, {headers});
+    return this.http.post(APIResources.baseUrl + APIResources.wishlist + `/${bookId}`, null, {headers});
   }
 
   deleteFromWishlist(bookId: string) {

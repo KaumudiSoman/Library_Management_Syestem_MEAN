@@ -24,8 +24,8 @@ export class BookDetailComponent implements OnInit {
   showFullContent: boolean = false;
   maxLength: number = 400;
 
-  constructor(private route: ActivatedRoute, private utilService: UtilService, private router: Router, 
-    private bookService: BookService, private authService: AuthService, private toastrService: ToastrService) {}
+  constructor(private wishlistService: WishlistService, 
+    private bookService: BookService, private borrowService: BookshelfService, private toastrService: ToastrService) {}
 
   ngOnInit(): void {
     this.getBookDetails();
@@ -52,9 +52,25 @@ export class BookDetailComponent implements OnInit {
     }
   }
 
-  addToWishlist() {
+  addToWishlist(bookId: string) {
+    this.wishlistService.addToWishlist(bookId).subscribe({
+      next: () => {
+        this.toastrService.success('Book added to the wishlist')
+      },
+      error: err => {
+        this.toastrService.error(err.message)
+      }
+    })
   }
 
-  addToBookshelf() {
+  borrow(bookId: string) {
+    this.borrowService.borrowBook(bookId).subscribe({
+      next: () => {
+        this.toastrService.success('Book borrowed successfully')
+      },
+      error: err => {
+        this.toastrService.error(err.message)
+      }
+    })
   }
 }
