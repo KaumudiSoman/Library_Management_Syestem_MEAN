@@ -10,10 +10,12 @@ import { VerifyEmailComponent } from './components/user-authentication/verify-em
 import { WishlistComponent } from './components/wishlist/wishlist.component';
 import { BookshelfComponent } from './components/bookshelf/bookshelf.component';
 import { AuthGuard } from './_guards/auth.guard';
+import { LandingComponent } from './components/landing/landing.component';
 
 const routes: Routes = [
   // {path: '', redirectTo: 'login', pathMatch: 'full'},
-  {path: '', component: HomeComponent},
+  {path: '', component: LandingComponent},
+  {path: 'home', component: HomeComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
   {path: 'explore', component: SearchBookComponent},

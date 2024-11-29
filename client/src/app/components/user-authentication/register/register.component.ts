@@ -51,7 +51,7 @@ export class RegisterComponent {
       role: String(formValue.role)
     }
     this.authService.signup(inputbody).subscribe({
-      next: () => {this.router.navigateByUrl('')},
+      next: () => {this.router.navigateByUrl('home')},
       error: err => {this.toastrService.error(err.message)}
     })
   }

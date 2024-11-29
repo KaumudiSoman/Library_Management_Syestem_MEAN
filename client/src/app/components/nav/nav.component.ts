@@ -26,4 +26,8 @@ export class NavComponent {
     })
     // console.log('hello');
   }
+
+  isLandingPage() {
+    return this.router.url === '/';
+  }
 }

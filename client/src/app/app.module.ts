@@ -29,7 +29,8 @@ import { SearchBookComponent } from './components/search-book/search-book.compon
 import { BookDetailComponent } from './components/book-detail/book-detail.component';
 
 import { WishlistComponent } from './components/wishlist/wishlist.component';
-import { BookshelfComponent } from './components/bookshelf/bookshelf.component'; 
+import { BookshelfComponent } from './components/bookshelf/bookshelf.component';
+import { LandingComponent } from './components/landing/landing.component'; 
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { BookshelfComponent } from './components/bookshelf/bookshelf.component';
     // VerifyEmailComponent,
     // ForgotPasswordComponent,
     WishlistComponent,
-    BookshelfComponent
+    BookshelfComponent,
+    LandingComponent
   ],
   imports: [
     CommonModule,
