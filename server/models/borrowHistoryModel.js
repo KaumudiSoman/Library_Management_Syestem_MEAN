@@ -31,6 +31,7 @@ borrowHistorySchema.pre('save', async function(next) {
     const issuedTimestamp = this.issuedTimestamp || Date.now();
     this.dueDate = new Date(issuedTimestamp);
     this.dueDate.setDate(this.dueDate.getDate() + 7);
+    // this.dueDate.setMinutes(this.dueDate.getMinutes() + 5);
 
     next();
 });

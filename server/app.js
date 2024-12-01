@@ -6,8 +6,7 @@ const bookRouter = require('./routes/bookRoutes');
 const userRouter = require('./routes/userRoutes');
 const borrowHistoryRouter = require('./routes/borrowHistoryRoutes');
 const wishlistRouter = require('./routes/wishlistRoutes');
-// const authController = require('./controllers/authController');
-// const emailController = require('./controllers/emailController');
+const initializeCrons = require('./crons/initializerCron')
 
 const app = express();
 
@@ -30,6 +29,8 @@ app.use(cookieParser());
 //         loggedInUser: req.user
 //     });
 // });
+
+initializeCrons();
 
 app.use('/api/books', bookRouter);
 app.use('/api/users', userRouter);
