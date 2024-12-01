@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         requierd: [true, 'Email is required'],
         trim: true,
-        unique: true
+        unique: false
     },
     role: {
         type: String,
@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Password is required'],
         minlength: [8, 'Password must have atleast 8 characters'],
-        maxlength: [40, 'Password can not have more than 40 characters'],
+        maxlength: [60, 'Password can not have more than 60 characters'],
         trim: true
     },
     passwordConfirm: {
@@ -36,7 +36,15 @@ const userSchema = new mongoose.Schema({
             },
             message: 'Passwords do not match'
         }
-    }
+    },
+    isVerified: {
+        type: Boolean,
+        default: false
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
 });
 
 userSchema.pre('save', async function(next) {

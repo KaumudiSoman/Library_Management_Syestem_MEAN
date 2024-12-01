@@ -1,33 +1,26 @@
 const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
 const User = require('./../models/userModel');
+const emailController = require('./emailController')
 
 const signInToken = id => {
     return jwt.sign({ id }, process.env.JWT_SECRET_KEY, { expiresIn: process.env.JWT_EXPIRES_IN });
 }
 
 exports.signup = async (req, res) => {
-    // if(req.method === 'GET') {
-    //     return res.render('signupForm');
-    // }
-
     try {
+        
         const newUser = await User.create({
             username: req.body.username,
             email: req.body.email,
             password: req.body.password,
             passwordConfirm: req.body.passwordConfirm
         });
-    
-        const token = signInToken(newUser._id);
 
-        // res.cookie('jwt', token, {
-        //     httpOnly: true,
-        //     secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
-        //     maxAge: 24 * 60 * 60 * 1000 // 1 day expiration
-        // });
-    
-        // return res.redirect('/');
+        const token = signInToken(newUser._id);
+        emailController.sendEmail(req.body.email, 'Email Verification', 
+            `Please click on following link to verify your email http://localhost:4200/verify-email/${token}`)
+
         res.status(201).json({
             status: 'success',
             token,
@@ -46,10 +39,6 @@ exports.signup = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-    // if(req.method === 'GET') {
-    //     return res.render('loginForm');
-    // }
-
     const { email, password } = req.body;
 
     const user = await User.findOne({email});
@@ -63,13 +52,6 @@ exports.login = async (req, res) => {
 
     const token = signInToken(user._id);
 
-    // res.cookie('jwt', token, {
-    //     httpOnly: true,
-    //     secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
-    //     maxAge: 24 * 60 * 60 * 1000 // 1 day expiration
-    // });
-
-    // return res.redirect('/');
     res.status(200).json({
         status: 'success',
         user,
@@ -115,6 +97,23 @@ exports.protect = async (req, res, next) => {
     next();
 };
 
+exports.verify = async(req, res, next) => {
+    try {
+        if (!req.user || !req.user.isVerified) {
+            return res.status(403).json({
+                status: 'fail',
+                message: 'Please verify your email to proceed'
+            });
+        }
+        next();
+    } catch (err) {
+        res.status(500).json({
+            status: 'fail',
+            message: err.message
+        });
+    }
+}
+
 exports.hasPermission = (...roles) => {
     return (req, res, next) => {
         if(!roles.includes(req.user.role)) {
@@ -128,13 +127,6 @@ exports.hasPermission = (...roles) => {
 };
 
 exports.logout = (req, res) => {
-    // res.cookie('jwt', '', {
-    //     httpOnly: true,
-    //     expires: new Date(0), // Set the cookie to expire immediately
-    //     secure: process.env.NODE_ENV === 'production'
-    // });
-
-    // res.redirect('/api/users/login');
     return res.status(200).json({
         status: 'success',
     })

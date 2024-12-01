@@ -18,7 +18,17 @@ export class AuthService {
   currentUser: User = {} as User;
 
   signup(body: any) {
-    return this.http.post(APIResources.baseUrl + APIResources.users + APIResources.signup, body);
+    return this.http.post(APIResources.baseUrl + APIResources.users + APIResources.signup, body).pipe(
+      map((response: any) => {
+        if(response) {
+          console.log(response);
+          this.currentUser = response.user;
+          this.currentUserSource.next(this.currentUser);
+          localStorage.setItem('loggedInUser', JSON.stringify(response.data.newUser));
+          localStorage.setItem('authToken', JSON.stringify(response.token));
+        }
+      })
+    );
   }
 
   login(body: any) {
@@ -54,5 +64,9 @@ export class AuthService {
     })
     console.log('account service, get current user : ', this.currentUser)
     return this.currentUser;
+  }
+
+  verifyEmail(token: string) {
+    return this.http.get(APIResources.baseUrl + APIResources.users + APIResources.verification + `/${token}`);
   }
 }

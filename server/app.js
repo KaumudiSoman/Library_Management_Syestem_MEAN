@@ -6,7 +6,8 @@ const bookRouter = require('./routes/bookRoutes');
 const userRouter = require('./routes/userRoutes');
 const borrowHistoryRouter = require('./routes/borrowHistoryRoutes');
 const wishlistRouter = require('./routes/wishlistRoutes');
-const authController = require('./controllers/authController');
+// const authController = require('./controllers/authController');
+// const emailController = require('./controllers/emailController');
 
 const app = express();
 
@@ -24,16 +25,17 @@ app.use(express.static('public'));
 
 app.use(cookieParser());
 
-app.get('/', authController.protect, (req, res) => {
-    res.render('home', {
-        loggedInUser: req.user
-    });
-});
+// app.get('/', authController.protect, (req, res) => {
+//     res.render('home', {
+//         loggedInUser: req.user
+//     });
+// });
 
 app.use('/api/books', bookRouter);
 app.use('/api/users', userRouter);
 app.use('/api/mybooks', borrowHistoryRouter);
 app.use('/api/wishlist', wishlistRouter);
+// app.post('/api/send_email', emailController.sendEmail);
 
 app.all('*', (req, res) => {
     res.status(404).json({

@@ -5,6 +5,7 @@ export const APIResources = {
     login: '/login',
     signup: '/signup',
     logout: '/logout',
+    verification: '/verification',
 
     books: '/books',
     // getAndCreateBooks: '/',

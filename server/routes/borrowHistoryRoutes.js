@@ -4,8 +4,8 @@ const borrowHistoryController = require('./../controllers/borrowHistoryControlle
 
 const router = express.Router();
 
-router.route('/').get(authController.protect, borrowHistoryController.getMyBookHistory);
-router.route('/borrow/:id').post(authController.protect, borrowHistoryController.borrowBook);
-router.route('/return/:id').post(authController.protect, borrowHistoryController.returnBook);
+router.route('/').get(authController.protect, authController.verify, borrowHistoryController.getMyBookHistory);
+router.route('/borrow/:id').post(authController.protect, authController.verify, borrowHistoryController.borrowBook);
+router.route('/return/:id').post(authController.protect, authController.verify, borrowHistoryController.returnBook);
 
 module.exports = router;

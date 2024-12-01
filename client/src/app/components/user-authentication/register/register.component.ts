@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/_services/auth.service';
 })
 export class RegisterComponent {
   registerForm: FormGroup = new FormGroup({});
+  registered: Boolean = false;
 
   constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private toastrService: ToastrService) { }
 
@@ -22,24 +23,10 @@ export class RegisterComponent {
     this.registerForm = this.fb.group({
       userName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
       role: ['']
     })
   }
-
-  // checkBoxValidation(): ValidatorFn {
-  //   return (control: AbstractControl) => {
-  //     console.log(control.value)
-  //     return control.value ? null : {notChecked : true}
-  //   }
-  // }
-
-  // markCheckboxTouched() {
-  //   const checkBoxControl = this.registerForm.get('checkBox');
-  //   if (checkBoxControl) {
-  //     checkBoxControl.markAsTouched();
-  //   }
-  // }
 
   register() {
     const formValue = this.registerForm.value;
@@ -51,7 +38,13 @@ export class RegisterComponent {
       role: String(formValue.role)
     }
     this.authService.signup(inputbody).subscribe({
-      next: () => {this.router.navigateByUrl('home')},
+      next: (response: any) => {
+        // let token = JSON.parse(JSON.stringify(response.data.token));
+        this.registered = true
+        // setTimeout(() => {
+        //   this.router.navigateByUrl('home');
+        // }, 10000);
+      },
       error: err => {this.toastrService.error(err.message)}
     })
   }

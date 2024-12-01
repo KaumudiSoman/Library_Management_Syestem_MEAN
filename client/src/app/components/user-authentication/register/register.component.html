@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-start align-items-center" style="margin-top: 100px;">
+<div class="d-flex justify-content-start align-items-center" style="margin-top: 100px;" *ngIf="!registered">
     <div class="form-width">
         <form [formGroup]="registerForm" (ngSubmit)="registerForm.valid && register()">
             <h2 class="text-center text-primary-emphasis">Sign Up</h2>
@@ -51,4 +51,8 @@
     <div class="img-div">
         <img src="../../assets/images/landing.png" alt="signinpage">
     </div>
+</div>
+
+<div *ngIf="registered" class="text-center" style="margin-top: 100px;">
+    <h6>A mail has been sent to your email account. Please click on the link to verify the email.</h6>
 </div>
