@@ -5,7 +5,7 @@ const User = require('./../models/userModel');
 const Book = require('./../models/bookModel');
 
 const lateReturn = () => {
-    cron.schedule('*/10 * * * *', async () => {
+    cron.schedule('0 0 * * *', async () => {
         try {
             console.log('checking')
             const today = new Date();

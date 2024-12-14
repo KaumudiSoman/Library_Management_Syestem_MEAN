@@ -24,6 +24,10 @@ const borrowHistorySchema = new mongoose.Schema({
         type: String,
         enum: ['BORROWED', 'RETURNED'],
         default: 'BORROWED'
+    },
+    overdueDuration: {
+        type: Number,
+        default: 0
     }
 });
 

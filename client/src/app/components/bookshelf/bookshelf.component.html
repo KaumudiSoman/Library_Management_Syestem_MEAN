@@ -2,7 +2,7 @@
     <div *ngFor="let book of books" class="books-container">
         <div class="book-tile">
             <div class="book-img">
-                <img [src]="'../../../../../assets/images/book-cover.gif'" alt="Thumbnail not available">
+                <img [src]="book.thumbnail || '../../../../../assets/images/book-cover.gif'" alt="Thumbnail not available">
             </div>
             <div class="book-info">
                 <h4>{{book.title}} <span class="author-name">by {{book.author}}</span></h4>
