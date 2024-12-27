@@ -16,6 +16,9 @@ export const APIResources = {
 
     wishlist: '/wishlist',
 
+    avgRating: 'avgRating',
+    rating: '/rating',
+
     q: '?q=',
     projection: '&projection=lite',
     maxResults: '&maxResults=40'

@@ -16,6 +16,11 @@
                   <div>Wishlist</div>
                 </div>
               </div>
+              <div class="star-rating">
+                <span class="star" *ngFor="let star of stars; let i = index" (click)="addRating(i + 1)">
+                  <i [ngClass]="{'fa': true, 'fa-star': i < currentRating, 'fa-star-o': i >= currentRating}"></i>
+                </span>
+              </div>
               <hr>
               <div class="row ms-3">
                 <div class="col-sm-3 text-secondary">

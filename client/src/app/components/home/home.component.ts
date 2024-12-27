@@ -18,7 +18,11 @@ export class HomeComponent implements OnInit {
   constructor(public authService: AuthService, private bookService: BookService, private router: Router) { }
 
   ngOnInit(): void {
-      this.getAllBooks();
+    console.log(!this.authService.user$)
+    if(!this.authService.user$) {
+      this.router.navigateByUrl('login')
+    }
+    this.getAllBooks();
   }
 
   getAllBooks() {

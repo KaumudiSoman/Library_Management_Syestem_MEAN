@@ -25,3 +25,25 @@
 .read-more {
     cursor: pointer;
 }
+
+.star-rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+  
+  .star {
+    /* padding: 5px; */
+    transition: color 0.2s;
+  }
+
+.star i {
+    color: gold;
+    font-size: 30px
+}
+  
+.star.highlighted {
+    color: gold;
+}

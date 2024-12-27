@@ -24,6 +24,9 @@ export class BookDetailComponent implements OnInit {
   showFullContent: boolean = false;
   maxLength: number = 400;
 
+  stars: number[] = [0, 1, 2, 3, 4];
+  currentRating: number = 0;
+
   constructor(private wishlistService: WishlistService, 
     private bookService: BookService, private borrowService: BookshelfService, private toastrService: ToastrService) {}
 
@@ -72,5 +75,11 @@ export class BookDetailComponent implements OnInit {
         this.toastrService.error(err.message)
       }
     })
+  }
+
+  addRating(rating: number) {
+    this.currentRating = rating;
+    console.log(this.currentRating);
+    
   }
 }
