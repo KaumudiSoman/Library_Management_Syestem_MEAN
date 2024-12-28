@@ -6,7 +6,8 @@ const bookRouter = require('./routes/bookRoutes');
 const userRouter = require('./routes/userRoutes');
 const borrowHistoryRouter = require('./routes/borrowHistoryRoutes');
 const wishlistRouter = require('./routes/wishlistRoutes');
-const initializeCrons = require('./crons/initializerCron')
+const ratingRouter = require('./routes/ratingRoutes');
+const initializeCrons = require('./crons/initializerCron');
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use('/api/books', bookRouter);
 app.use('/api/users', userRouter);
 app.use('/api/mybooks', borrowHistoryRouter);
 app.use('/api/wishlist', wishlistRouter);
+app.use('/api/rate', ratingRouter);
 // app.post('/api/send_email', emailController.sendEmail);
 
 app.all('*', (req, res) => {

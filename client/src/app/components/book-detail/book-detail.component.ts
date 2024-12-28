@@ -5,6 +5,7 @@ import { Book } from 'src/app/_models/BookDataModels';
 import { AuthService } from 'src/app/_services/auth.service';
 import { BookService } from 'src/app/_services/book.service';
 import { BookshelfService } from 'src/app/_services/bookshelf.service';
+import { RateService } from 'src/app/_services/rate.service';
 import { UtilService } from 'src/app/_services/util.service';
 import { WishlistService } from 'src/app/_services/wishlist.service';
 
@@ -27,7 +28,7 @@ export class BookDetailComponent implements OnInit {
   stars: number[] = [0, 1, 2, 3, 4];
   currentRating: number = 0;
 
-  constructor(private wishlistService: WishlistService, 
+  constructor(private wishlistService: WishlistService, private rateService: RateService,
     private bookService: BookService, private borrowService: BookshelfService, private toastrService: ToastrService) {}
 
   ngOnInit(): void {
@@ -72,7 +73,7 @@ export class BookDetailComponent implements OnInit {
         this.toastrService.success('Book borrowed successfully')
       },
       error: err => {
-        this.toastrService.error(err.message)
+        this.toastrService.error(err.message);
       }
     })
   }
@@ -80,6 +81,14 @@ export class BookDetailComponent implements OnInit {
   addRating(rating: number) {
     this.currentRating = rating;
     console.log(this.currentRating);
-    
+    let inputbody = {
+      bookId: this.bookId,
+      rating: this.currentRating
+    }
+    this.rateService.addUserRating(inputbody).subscribe({
+      error: (err) => {
+        this.toastrService.error(err.message);
+      }
+    })
   }
 }

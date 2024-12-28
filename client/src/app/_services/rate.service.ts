@@ -10,18 +10,18 @@ export class RateService {
 
   constructor(private http: HttpClient, private utilService: UtilService) { }
 
-  addUserRating(rating: Number, bookId: String) {
+  addUserRating(inputbody: any) {
     const headers = this.utilService.setAuthHeader();
-    return this.http.post(APIResources.baseUrl + APIResources.rating + `/${bookId}`, rating, {headers});
+    return this.http.post(APIResources.baseUrl + APIResources.rate, inputbody, {headers});
   }
 
-  getAvgRating(bookId: String) {
-    const headers = this.utilService.setAuthHeader();
-    return this.http.get(APIResources.baseUrl + APIResources.avgRating + `/${bookId}`, {headers});
-  }
+  // getAvgRating(bookId: String) {
+  //   const headers = this.utilService.setAuthHeader();
+  //   return this.http.get(APIResources.baseUrl + APIResources.avgRating + `/${bookId}`, {headers});
+  // }
 
-  getUserRating(bookId: String) {
-    const headers = this.utilService.setAuthHeader();
-    return this.http.get(APIResources.baseUrl + APIResources.rating + `/${bookId}`, {headers});
-  }
+  // getUserRating(bookId: String) {
+  //   const headers = this.utilService.setAuthHeader();
+  //   return this.http.get(APIResources.baseUrl + APIResources.rating, {bookId: bookId}, {headers});
+  // }
 }

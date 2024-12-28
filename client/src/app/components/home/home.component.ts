@@ -19,9 +19,9 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(!this.authService.user$)
-    if(!this.authService.user$) {
-      this.router.navigateByUrl('login')
-    }
+    // if(!this.authService.user$) {
+    //   this.router.navigateByUrl('login')
+    // }
     this.getAllBooks();
   }
 
