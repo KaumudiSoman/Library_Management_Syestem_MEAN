@@ -6,6 +6,8 @@ export const APIResources = {
     signup: '/signup',
     logout: '/logout',
     verification: '/verification',
+    forgotPassword: '/forgotPassword',
+    resetPassword: '/resetPassword',
 
     books: '/books',
     // getAndCreateBooks: '/',

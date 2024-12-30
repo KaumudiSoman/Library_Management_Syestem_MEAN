@@ -30,7 +30,8 @@ import { BookDetailComponent } from './components/book-detail/book-detail.compon
 
 import { WishlistComponent } from './components/wishlist/wishlist.component';
 import { BookshelfComponent } from './components/bookshelf/bookshelf.component';
-import { LandingComponent } from './components/landing/landing.component'; 
+import { LandingComponent } from './components/landing/landing.component';
+import { ResetPasswordComponent } from './components/user-authentication/reset-password/reset-password.component'; 
 
 
 @NgModule({
@@ -42,11 +43,12 @@ import { LandingComponent } from './components/landing/landing.component';
     HomeComponent,
     // SearchBookComponent,
     BookDetailComponent,
-    // VerifyEmailComponent,
-    // ForgotPasswordComponent,
+    VerifyEmailComponent,
+    ForgotPasswordComponent,
     WishlistComponent,
     BookshelfComponent,
-    LandingComponent
+    LandingComponent,
+    ResetPasswordComponent
   ],
   imports: [
     CommonModule,
@@ -56,9 +58,6 @@ import { LandingComponent } from './components/landing/landing.component';
     HttpClientModule,
     BsDropdownModule.forRoot(),
     PaginationModule.forRoot(),
-    // provideFirebaseApp(() => initializeApp(environment.firebase)),
-    // provideAuth(() => getAuth()),
-    // provideFirestore(() => getFirestore()),
     BrowserAnimationsModule,
     ToastrModule.forRoot({positionClass: 'toast-bottom-right'})
   ],

@@ -114,6 +114,25 @@ exports.verify = async(req, res, next) => {
     }
 }
 
+exports.resetPassword = async(req, res) => {
+    // const token = signInToken(newUser._id);
+    try {
+        emailController.sendEmail(req.body.email, 'Email Verification', 
+            'Please click on following link to verify your email http://localhost:4200/reset-password')
+        
+        return res.status(200).json({
+            status: 'success',
+            message: 'email sent successfully'
+        });
+    }
+    catch (err) { 
+        return res.status(500).json({
+            status: 'fail',
+            message: err.message
+        });
+    }
+}
+
 exports.hasPermission = (...roles) => {
     return (req, res, next) => {
         if(!roles.includes(req.user.role)) {

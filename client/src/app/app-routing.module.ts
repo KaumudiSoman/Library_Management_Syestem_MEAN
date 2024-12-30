@@ -11,6 +11,7 @@ import { WishlistComponent } from './components/wishlist/wishlist.component';
 import { BookshelfComponent } from './components/bookshelf/bookshelf.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { LandingComponent } from './components/landing/landing.component';
+import { ResetPasswordComponent } from './components/user-authentication/reset-password/reset-password.component';
 
 const routes: Routes = [
   // {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -22,8 +23,9 @@ const routes: Routes = [
   {path: 'wishlist', component: WishlistComponent},
   {path: 'bookshelf', component: BookshelfComponent},
   {path: 'book-detail/:id', component: BookDetailComponent},
-  // {path: 'forgot-password', component: ForgotPasswordComponent},
+  {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'verify-email/:token', component: VerifyEmailComponent},
+  {path: 'reset-password/', component: ResetPasswordComponent},
   // {path: '',
   //   runGuardsAndResolvers: 'always',
   //   canActivate: [AuthGuard],

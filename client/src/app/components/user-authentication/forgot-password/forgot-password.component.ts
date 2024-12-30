@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/_services/auth.service';
 })
 export class ForgotPasswordComponent implements OnInit {
   forgotPasswordForm : FormGroup = new FormGroup({}); 
+  emailFlag: Boolean = false;
 
   constructor(private authService: AuthService, private fb: FormBuilder, private router: Router, private toastrService: ToastrService) { }
 
@@ -25,10 +26,12 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   forgotPassword() {
-    // const email = String(this.forgotPasswordForm.value.email);
-    // this.authService.forgotPassword(email).subscribe({
-    //   next: () => {this.router.navigateByUrl('verify-email')},
-    //   error: err => {this.toastrService.error(err.message)}
-    // })
+    const email = String(this.forgotPasswordForm.value.email);
+    this.authService.forgotPassword(email).subscribe({
+      next: () => {
+        this.emailFlag = true;
+      },
+      error: err => {this.toastrService.error(err.message)}
+    })
   }
 }

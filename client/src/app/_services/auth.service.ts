@@ -69,4 +69,12 @@ export class AuthService {
   verifyEmail(token: string) {
     return this.http.get(APIResources.baseUrl + APIResources.users + APIResources.verification + `/${token}`);
   }
+
+  forgotPassword(email: String) {
+    return this.http.post(APIResources.baseUrl + APIResources.users + APIResources.forgotPassword, {email: email});
+  }
+
+  resetPassword(password: String) {
+    return this.http.post(APIResources.baseUrl + APIResources.users + APIResources.resetPassword, {password: password});
+  }
 }
