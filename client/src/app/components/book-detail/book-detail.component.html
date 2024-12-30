@@ -80,6 +80,38 @@
               </div>
             </div>
           </div>
+          <h6>Add Review</h6>
+          <div class="card mb-3">
+            <div class="card-body" >
+              <form [formGroup]="reviewForm" (ngSubmit)="reviewForm.valid && addReview()">
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Add Review" aria-label="review" 
+                    aria-describedby="button-addon2" formControlName="review">
+                  <button class="btn btn-outline-success" type="submit" id="button-addon2">Add</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <h6 *ngIf="reviews.length > 0">Reviews</h6>
+          <div *ngIf="reviews.length > 0" class="card mb-3">
+            <div class="card-body">
+              <div *ngFor="let review of reviews">
+                <div class="row">
+                  <div class="col text-primary">
+                    <h6 class="mb-0"><strong>{{review.username}}</strong></h6>
+                  </div>
+                  <div class="col text-secondary">
+                    <p class="mb-0">{{review.createdAt}}</p>
+                  </div>
+                </div>
+                <div class="col-sm-3 text-secondary">
+                  <h6 class="mb-0">Rating: {{review.rating}}</h6>
+                </div>
+                <div>{{review.review}}</div>
+                <hr *ngIf="reviews.length > 1">
+              </div>
+            </div>
+          </div>
         </div>
     </div>
 </div>

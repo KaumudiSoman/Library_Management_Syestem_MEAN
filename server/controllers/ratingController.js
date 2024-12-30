@@ -4,14 +4,13 @@ const Book = require('./../models/bookModel');
 
 exports.createRating = async(req, res) => {
     try {
-        const newRating = await Rating.create({
-            bookId: req.body.bookId,
-            rating: req.body.rating,
-            userId: req.user.id
-        });
+        const newRating = await Rating.findOneAndUpdate(
+            {userId: req.user.id, bookId: req.params.id},
+            {rating: req.body.rating},
+            {upsert: true, new: true}
+        );
 
-        const book = await Book.findById(req.body.bookId);
-        
+        const book = await Book.findById(req.params.id);
         
         book.ratings = Math.round(((book.ratings * book.totalRatings + newRating.rating) / (book.totalRatings + 1)) * 10) / 10;
         book.totalRatings += 1;

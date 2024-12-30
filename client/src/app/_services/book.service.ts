@@ -31,12 +31,4 @@ export class BookService {
     const headers = this.utilService.setAuthHeader();
     return this.http.delete(APIResources.baseUrl + APIResources.books + `/${bookId}`, {headers});
   }
-
-  setBookId(id: string): void {
-    this.bookDetailId = id;
-  }
-
-  getBookId(): string {
-    return this.bookDetailId;
-  }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Book } from 'src/app/_models/BookDataModels';
@@ -6,6 +7,7 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { BookService } from 'src/app/_services/book.service';
 import { BookshelfService } from 'src/app/_services/bookshelf.service';
 import { RateService } from 'src/app/_services/rate.service';
+import { ReviewService } from 'src/app/_services/review.service';
 import { UtilService } from 'src/app/_services/util.service';
 import { WishlistService } from 'src/app/_services/wishlist.service';
 
@@ -28,15 +30,24 @@ export class BookDetailComponent implements OnInit {
   stars: number[] = [0, 1, 2, 3, 4];
   currentRating: number = 0;
 
-  constructor(private wishlistService: WishlistService, private rateService: RateService,
-    private bookService: BookService, private borrowService: BookshelfService, private toastrService: ToastrService) {}
+  reviews: any[] = [];
+  reviewForm: FormGroup = new FormGroup({});
+
+  constructor(private wishlistService: WishlistService, private rateService: RateService, private reviewService: ReviewService,
+    private bookService: BookService, private borrowService: BookshelfService, private toastrService: ToastrService,
+    private fb: FormBuilder, private router: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.initializeReviewForm();
     this.getBookDetails();
+    this.getReviews();
   }
 
   getBookDetails() {
-    this.bookId = this.bookService.getBookId();
+    this.router.paramMap.subscribe((params) => {
+      this.bookId = params.get('id')!;
+    })
+    
     console.log(this.bookId);
     this.bookService.getBook(this.bookId).subscribe({
       next: (response: any) => {
@@ -81,11 +92,40 @@ export class BookDetailComponent implements OnInit {
   addRating(rating: number) {
     this.currentRating = rating;
     console.log(this.currentRating);
-    let inputbody = {
-      bookId: this.bookId,
-      rating: this.currentRating
-    }
-    this.rateService.addUserRating(inputbody).subscribe({
+
+    this.rateService.addUserRating(rating, this.bookId).subscribe({
+      next: (response: any) => {
+        let message = JSON.parse(JSON.stringify(response.message));
+        this.toastrService.success(message);
+      },
+      error: (err) => {
+        this.toastrService.error(err.message);
+      }
+    })
+  }
+
+  getReviews() {
+    this.reviewService.getReviews(this.bookId).subscribe({
+      next: (response: any) => {
+        this.reviews = JSON.parse(JSON.stringify(response.reviews));
+        console.log(this.reviews)
+      }
+    })
+  }
+
+  initializeReviewForm() {
+    this.reviewForm = this.fb.group({
+      review: ['']
+    });
+  }
+
+  addReview() {
+    const formValue = this.reviewForm.value;
+    console.log(formValue)
+    this.reviewService.addReview(String(formValue.review), this.bookId).subscribe({
+      next: () => {
+        this.getReviews();
+      },
       error: (err) => {
         this.toastrService.error(err.message);
       }

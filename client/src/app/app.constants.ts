@@ -19,6 +19,8 @@ export const APIResources = {
     avgRating: 'avgRating',
     rate: '/rate',
 
+    reviews: '/reviews',
+
     q: '?q=',
     projection: '&projection=lite',
     maxResults: '&maxResults=40'

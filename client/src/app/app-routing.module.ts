@@ -21,7 +21,7 @@ const routes: Routes = [
   {path: 'explore', component: SearchBookComponent},
   {path: 'wishlist', component: WishlistComponent},
   {path: 'bookshelf', component: BookshelfComponent},
-  {path: 'book-detail', component: BookDetailComponent},
+  {path: 'book-detail/:id', component: BookDetailComponent},
   // {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'verify-email/:token', component: VerifyEmailComponent},
   // {path: '',

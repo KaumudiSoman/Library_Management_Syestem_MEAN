@@ -57,8 +57,7 @@ export class BookshelfComponent {
 
   gotoBookDetail(bookId: string) {
     console.log(bookId);
-    this.bookService.setBookId(bookId);
-    this.router.navigate(['/book-detail']);
+    this.router.navigate([`/book-detail/${bookId}`]);
   }
 
   returnBook(bookId: string) {

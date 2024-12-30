@@ -13,9 +13,11 @@ const ratingSchema = new mongoose.Schema({
     },
     rating: {
         type: Number,
-        default: 5.0
+        required: [true, 'Rating is required']
     }
 });
+
+ratingSchema.index({ userId: 1, bookId: 1 }, { unique: true });
 
 const Rating = mongoose.model('Rating', ratingSchema);
 

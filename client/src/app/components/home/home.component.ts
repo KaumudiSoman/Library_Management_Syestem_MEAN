@@ -38,7 +38,6 @@ export class HomeComponent implements OnInit {
 
   gotoBookDetail(bookId: string) {
     console.log(bookId);
-    this.bookService.setBookId(bookId);
-    this.router.navigate(['/book-detail']);
+    this.router.navigate([`/book-detail/${bookId}`]);
   }
 }

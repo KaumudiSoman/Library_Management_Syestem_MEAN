@@ -10,9 +10,9 @@ export class RateService {
 
   constructor(private http: HttpClient, private utilService: UtilService) { }
 
-  addUserRating(inputbody: any) {
+  addUserRating(rating: number, bookId: String) {
     const headers = this.utilService.setAuthHeader();
-    return this.http.post(APIResources.baseUrl + APIResources.rate, inputbody, {headers});
+    return this.http.post(APIResources.baseUrl + APIResources.rate + `/${bookId}`, {rating: rating}, {headers});
   }
 
   // getAvgRating(bookId: String) {

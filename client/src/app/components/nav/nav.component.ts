@@ -20,7 +20,7 @@ export class NavComponent {
   logout() {
     this.authService.logout().subscribe({
       next: () => {
-        this.router.navigateByUrl('');
+        this.router.navigateByUrl('login');
       },
       error: err => {this.toastrService.error(err.message)}
     })
