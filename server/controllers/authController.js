@@ -7,6 +7,10 @@ const signInToken = id => {
     return jwt.sign({ id }, process.env.JWT_SECRET_KEY, { expiresIn: process.env.JWT_EXPIRES_IN });
 }
 
+const passwordResetToken = id => {
+    return jwt.sign({ id }, process.env.JWT_SECRET_KEY, { expiresIn: process.env.PASS_RESET_JWT_EXPIRES_IN });
+}
+
 exports.signup = async (req, res) => {
     try {
         
@@ -114,11 +118,19 @@ exports.verify = async(req, res, next) => {
     }
 }
 
-exports.resetPassword = async(req, res) => {
-    // const token = signInToken(newUser._id);
+exports.forgotPassword = async(req, res) => {
     try {
+        const user = await User.findOne({email: req.body.email});
+        if(!user) {
+            return res.status(404).json({
+                status: 'fail',
+                message: 'Email not matched'
+            });
+        }
+
+        const token = passwordResetToken(user._id);
         emailController.sendEmail(req.body.email, 'Email Verification', 
-            'Please click on following link to verify your email http://localhost:4200/reset-password')
+            `Please click on following link to verify your email http://localhost:4200/reset-password/${token}`);
         
         return res.status(200).json({
             status: 'success',
@@ -126,6 +138,36 @@ exports.resetPassword = async(req, res) => {
         });
     }
     catch (err) { 
+        return res.status(500).json({
+            status: 'fail',
+            message: err.message
+        });
+    }
+}
+
+exports.resetPassword = async(req, res) => {
+    try {
+        const token = req.params.token;
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+
+        const user = await User.findById(decoded.id);
+
+        if (!user) {
+            return res.status(400).json({
+                status: 'fail',
+                message: 'User not found',
+            });
+        }
+
+        user.password = req.body.password;
+        user.save();
+
+        return res.status(200).json({
+            status: 'success',
+            message: 'Password reset successfully'
+        });
+    }
+    catch (err) {
         return res.status(500).json({
             status: 'fail',
             message: err.message

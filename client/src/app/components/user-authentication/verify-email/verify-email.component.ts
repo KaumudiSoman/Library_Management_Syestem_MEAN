@@ -13,9 +13,7 @@ export class VerifyEmailComponent implements OnInit {
 
   ngOnInit(): void {
     const token = this.route.snapshot.paramMap.get('token');
-    let token1 = localStorage.getItem('authToken')
     console.log(token)
-    console.log(token1)
     if (token) {
         this.verifyEmail(token);
     }

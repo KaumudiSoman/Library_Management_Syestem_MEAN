@@ -25,7 +25,7 @@ const routes: Routes = [
   {path: 'book-detail/:id', component: BookDetailComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'verify-email/:token', component: VerifyEmailComponent},
-  {path: 'reset-password/', component: ResetPasswordComponent},
+  {path: 'reset-password/:token', component: ResetPasswordComponent},
   // {path: '',
   //   runGuardsAndResolvers: 'always',
   //   canActivate: [AuthGuard],

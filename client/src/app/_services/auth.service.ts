@@ -74,7 +74,7 @@ export class AuthService {
     return this.http.post(APIResources.baseUrl + APIResources.users + APIResources.forgotPassword, {email: email});
   }
 
-  resetPassword(password: String) {
-    return this.http.post(APIResources.baseUrl + APIResources.users + APIResources.resetPassword, {password: password});
+  resetPassword(password: String, token: String) {
+    return this.http.post(APIResources.baseUrl + APIResources.users + APIResources.resetPassword + `/${token}`, {password: password});
   }
 }
