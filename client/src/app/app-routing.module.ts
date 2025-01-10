@@ -12,6 +12,7 @@ import { BookshelfComponent } from './components/bookshelf/bookshelf.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { LandingComponent } from './components/landing/landing.component';
 import { ResetPasswordComponent } from './components/user-authentication/reset-password/reset-password.component';
+import { PaymentComponent } from './components/payment/payment.component';
 
 const routes: Routes = [
   // {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -26,6 +27,7 @@ const routes: Routes = [
   {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'verify-email/:token', component: VerifyEmailComponent},
   {path: 'reset-password/:token', component: ResetPasswordComponent},
+  {path: 'payment', component: PaymentComponent},
   // {path: '',
   //   runGuardsAndResolvers: 'always',
   //   canActivate: [AuthGuard],

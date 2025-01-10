@@ -17,6 +17,7 @@
 
       <div>
         <a class="nav-link text-light" routerLink="/login" *ngIf="isLandingPage() && !(authService.user$ | async)">Log In</a>
+        <a class="nav-link text-light" routerLink="/register" *ngIf="isLandingPage() && !(authService.user$ | async)">Sign Up</a>
       </div>
       <div class="dropdown" dropdown *ngIf="(authService.user$ | async) as currentUser">
         <a class="dropdown-toggle text-light text-decoration-none" dropdownToggle>

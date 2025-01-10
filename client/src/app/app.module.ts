@@ -31,7 +31,8 @@ import { BookDetailComponent } from './components/book-detail/book-detail.compon
 import { WishlistComponent } from './components/wishlist/wishlist.component';
 import { BookshelfComponent } from './components/bookshelf/bookshelf.component';
 import { LandingComponent } from './components/landing/landing.component';
-import { ResetPasswordComponent } from './components/user-authentication/reset-password/reset-password.component'; 
+import { ResetPasswordComponent } from './components/user-authentication/reset-password/reset-password.component';
+import { PaymentComponent } from './components/payment/payment.component'; 
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { ResetPasswordComponent } from './components/user-authentication/reset-p
     WishlistComponent,
     BookshelfComponent,
     LandingComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    PaymentComponent
   ],
   imports: [
     CommonModule,

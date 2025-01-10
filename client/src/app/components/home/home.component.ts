@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { Book } from 'src/app/_models/BookDataModels';
 import { AuthService } from 'src/app/_services/auth.service';
 import { BookService } from 'src/app/_services/book.service';
@@ -18,7 +19,10 @@ export class HomeComponent implements OnInit {
   constructor(public authService: AuthService, private bookService: BookService, private router: Router) { }
 
   ngOnInit(): void {
-    console.log(!this.authService.user$)
+    // console.log(this.authService.currentUserSource.getValue())
+    firstValueFrom(this.authService.user$).then(user => {
+      console.log(user);
+    });
     // if(!this.authService.user$) {
     //   this.router.navigateByUrl('login')
     // }

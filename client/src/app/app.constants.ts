@@ -23,6 +23,9 @@ export const APIResources = {
 
     reviews: '/reviews',
 
+    payment: '/payment',
+    order: '/order',
+
     q: '?q=',
     projection: '&projection=lite',
     maxResults: '&maxResults=40'

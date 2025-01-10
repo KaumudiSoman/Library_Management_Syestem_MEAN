@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { AuthService } from 'src/app/_services/auth.service';
 
 @Component({
@@ -11,9 +12,15 @@ export class LandingComponent implements OnInit {
   constructor(public authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-      if(this.authService.user$) {
+    firstValueFrom(this.authService.user$).then(user => {
+      if(user) {
         this.router.navigateByUrl('home')
       }
+    });
+      // if(this.authService.user$) {
+      //   console.log(this.authService.user$)
+      //   this.router.navigateByUrl('home')
+      // }
   }
 
   goToRegister() {
