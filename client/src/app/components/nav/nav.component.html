@@ -15,8 +15,8 @@
         </li>
       </ul>
 
-      <div>
-        <a class="nav-link text-light" routerLink="/login" *ngIf="isLandingPage() && !(authService.user$ | async)">Log In</a>
+      <div class="d-flex justify-content-center align-items-center">
+        <a class="nav-link text-light me-3" routerLink="/login" *ngIf="isLandingPage() && !(authService.user$ | async)">Log In</a>
         <a class="nav-link text-light" routerLink="/register" *ngIf="isLandingPage() && !(authService.user$ | async)">Sign Up</a>
       </div>
       <div class="dropdown" dropdown *ngIf="(authService.user$ | async) as currentUser">

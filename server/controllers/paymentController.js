@@ -1,6 +1,7 @@
 const axios = require('axios');
 const Cashfree = require('cashfree-pg');
 const { v4: uuidv4 } = require('uuid');
+const User = require('../models/userModel');
 
 Cashfree.XClientId = process.env.CASHFREE_APP_ID;
 Cashfree.XClientSecret = process.env.CASHFREE_SECRET_KEY;
@@ -8,6 +9,13 @@ Cashfree.XEnvironment = Cashfree.CFEnvironment.SANDBOX;
 
 exports.createOrder = async (req, res) => {
     try {
+        let amount = 0;
+        if(req.body.duration == '6') {
+            amount = 500;
+        }
+        else {
+            amount = 1000;
+        }
         const url = 'https://sandbox.cashfree.com/pg/orders';
         const headers = {
             accept: 'application/json',
@@ -27,7 +35,7 @@ exports.createOrder = async (req, res) => {
             order_meta: {
                 payment_methods: 'cc,dc,upi',
             },
-            order_amount: 100,
+            order_amount: amount,
             order_id: uuidv4(),
             order_currency: 'INR',
         };
@@ -67,13 +75,12 @@ exports.checkStatus = async (req, res) => {
 
         axios
         .request(options)
-        .then(function (response) {
+        .then(async function (response) {
             console.log(response.data);
             if(response.data.order_status === "PAID"){
-                // return res.status(200).json({
-                //     status: 'success',
-                //     message: 'payment was successful'
-                // });
+                const user = await User.findById(response.data.customer_id);
+                user.isMember = true;
+                user.save();
                 return res.redirect('http://localhost:4200/payment-success');
             } else if(response.data.order_status === "ACTIVE"){
                 return res.status(200).json({
@@ -82,10 +89,6 @@ exports.checkStatus = async (req, res) => {
                 });
             } else{
                 return res.redirect('http://localhost:4200/payment-failure');
-                // return res.status(402).json({
-                //     status: 'fail',
-                //     message: 'payment failure'
-                // });
             }
         })
         .catch(function (error) {   

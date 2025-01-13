@@ -23,7 +23,7 @@ export class VerifyEmailComponent implements OnInit {
     this.authService.verifyEmail(token).subscribe({
       next: (response: any) => {
         setTimeout(() => {
-          this.router.navigateByUrl('home');
+          this.router.navigateByUrl('payment');
       }, 5000);
       },
       error: (err) => {

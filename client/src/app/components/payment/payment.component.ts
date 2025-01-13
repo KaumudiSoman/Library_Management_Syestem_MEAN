@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/_models/BookDataModels';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -18,31 +19,44 @@ export class PaymentComponent implements OnInit {
   sessionId: String = '';
   orderId: String = '';
 
-  // loggedInUser: any;
+  loggedInUser: any;
 
-  constructor(private paymentService: PaymentService, private toastrService: ToastrService, private authService: AuthService) { }
+  durationForm: FormGroup = new FormGroup({});
+
+  constructor(private paymentService: PaymentService, private toastrService: ToastrService, private authService: AuthService,
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit(): void {
+    this.initializeForm();
     this.cashfree = Cashfree({
       mode: environment.cashfreeMode,
     });
-    // this.loggedInUser = this.authService.getCurrentUser();
+    this.loggedInUser = this.authService.getCurrentUser();
+  }
+
+  initializeForm() {
+    this.durationForm = this.fb.group({
+      duration: [''],
+    });
   }
 
   getSessionId() {
+    const formValue = this.durationForm.value;
     let inputbody= {
-      userId: "670b5bec4ac5b882bad2a10b",
-      username: "user2",
-      email: "user2@gmail.com",
-      contactNo: "9819062701",
+      userId: this.loggedInUser._id,
+      username: this.loggedInUser.username,
+      email: this.loggedInUser.email,
+      contactNo: this.loggedInUser.contactNo,
+      duration: String(formValue.duration)
     }
     console.log(inputbody);
+
     this.paymentService.getSessionId(inputbody).subscribe({
       next: (response: any) => {
         this.sessionId = JSON.parse(JSON.stringify(response.payment_session_id));
         this.orderId = JSON.parse(JSON.stringify(response.order_id));
-        console.log(this.sessionId);
-        console.log(this.orderId);
+        this.handlePayment();
       },
       error: (error) => {
         this.toastrService.error(error.message);

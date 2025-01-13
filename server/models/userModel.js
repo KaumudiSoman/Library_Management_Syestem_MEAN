@@ -26,18 +26,15 @@ const userSchema = new mongoose.Schema({
         maxlength: [60, 'Password can not have more than 60 characters'],
         trim: true
     },
-    passwordConfirm: {
+    contactNo: {
         type: String,
-        requierd: [true, 'Please confirm the password'],
-        trim: true,
-        validate: {
-            validator: function(el) {
-                return el === this.password
-            },
-            message: 'Passwords do not match'
-        }
+        required: [true, 'Contact number of the user is required']
     },
     isVerified: {
+        type: Boolean,
+        default: false
+    },
+    isMember: {
         type: Boolean,
         default: false
     },
@@ -51,14 +48,9 @@ userSchema.pre('save', async function(next) {
     if(!this.isModified('password')) return next();
 
     this.password = await bcrypt.hash(this.password, 12);
-    this.passwordConfirm = undefined;
 
     next();
 });
-
-userSchema.methods.correctPassword = async function(candidatePassword, userPassword) {
-    return await bcrypt.compare(candidatePassword, userPassword);
-}
 
 const User = mongoose.model('User', userSchema);
 

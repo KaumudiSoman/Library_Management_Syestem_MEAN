@@ -33,7 +33,8 @@ import { BookshelfComponent } from './components/bookshelf/bookshelf.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { ResetPasswordComponent } from './components/user-authentication/reset-password/reset-password.component';
 import { PaymentComponent } from './components/payment/payment.component';
-import { PaymentStatusComponent } from './components/payment-status/payment-status.component'; 
+import { PaymentSuccessComponent } from './components/payment-success/payment-success.component';
+import { PaymentFailureComponent } from './components/payment-failure/payment-failure.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { PaymentStatusComponent } from './components/payment-status/payment-stat
     LandingComponent,
     ResetPasswordComponent,
     PaymentComponent,
-    PaymentStatusComponent
+    PaymentSuccessComponent,
+    PaymentFailureComponent,
   ],
   imports: [
     CommonModule,

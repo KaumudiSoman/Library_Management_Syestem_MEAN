@@ -1,2 +1,13 @@
-<button (click)="getSessionId()">Get Session Id</button>
-<button (click)="handlePayment()">Pay</button>
+<div class="form-div">
+    <form class="form-width" [formGroup]="durationForm" (submit)="getSessionId()">
+        <h4>Please select the membership duration</h4>
+        <h6>6 Months: Rs 500</h6>
+        <h6>1Year: Rs 1000</h6>
+        <select class="form-select mt-4 mb-4" formControlName="duration">
+            <option value="" selected disabled>Select Duration</option>
+            <option value="6">Six Months</option>
+            <option value="12">1 Year</option>
+        </select>
+        <button class="btn btn-success" type="submit">Make Payment</button>
+    </form>
+</div>

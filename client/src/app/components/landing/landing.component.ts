@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { firstValueFrom } from 'rxjs';
 import { AuthService } from 'src/app/_services/auth.service';
 
@@ -9,7 +10,7 @@ import { AuthService } from 'src/app/_services/auth.service';
   styleUrls: ['./landing.component.css']
 })
 export class LandingComponent implements OnInit {
-  constructor(public authService: AuthService, private router: Router) { }
+  constructor(public authService: AuthService, private router: Router, private toastrService: ToastrService) { }
 
   ngOnInit(): void {
     firstValueFrom(this.authService.user$).then(user => {
@@ -17,13 +18,10 @@ export class LandingComponent implements OnInit {
         this.router.navigateByUrl('home')
       }
     });
-      // if(this.authService.user$) {
-      //   console.log(this.authService.user$)
-      //   this.router.navigateByUrl('home')
-      // }
   }
 
   goToRegister() {
-    this.router.navigateByUrl('register')
+    this.toastrService.info('Sign up to become a member');
+    this.router.navigateByUrl('register');
   }
 }

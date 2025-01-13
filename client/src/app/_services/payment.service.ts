@@ -12,8 +12,4 @@ export class PaymentService {
   getSessionId(inputbody: any) {
     return this.http.post(APIResources.baseUrl + APIResources.payment + APIResources.order, inputbody);
   }
-
-  makePayment(orderId: String) {
-    return this.http.get(APIResources.baseUrl + APIResources.payment + APIResources.status + `/${orderId}`);
-  }
 }

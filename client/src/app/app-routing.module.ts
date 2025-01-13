@@ -13,6 +13,8 @@ import { AuthGuard } from './_guards/auth.guard';
 import { LandingComponent } from './components/landing/landing.component';
 import { ResetPasswordComponent } from './components/user-authentication/reset-password/reset-password.component';
 import { PaymentComponent } from './components/payment/payment.component';
+import { PaymentSuccessComponent } from './components/payment-success/payment-success.component';
+import { PaymentFailureComponent } from './components/payment-failure/payment-failure.component';
 
 const routes: Routes = [
   // {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -28,6 +30,8 @@ const routes: Routes = [
   {path: 'verify-email/:token', component: VerifyEmailComponent},
   {path: 'reset-password/:token', component: ResetPasswordComponent},
   {path: 'payment', component: PaymentComponent},
+  {path: 'payment-success', component: PaymentSuccessComponent},
+  {path: 'payment-failure', component: PaymentFailureComponent},
   // {path: '',
   //   runGuardsAndResolvers: 'always',
   //   canActivate: [AuthGuard],

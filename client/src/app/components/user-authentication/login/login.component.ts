@@ -41,8 +41,4 @@ export class LoginComponent implements OnInit {
       error: err => {this.toastrService.error(err.message)}
     })
   }
-
-  // signInWithGoogle() {
-  //   this.authService.signInWithGoogle();
-  // } 
 }

@@ -23,8 +23,8 @@ export class RegisterComponent {
     this.registerForm = this.fb.group({
       userName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
+      contactNo: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
-      role: ['']
     })
   }
 
@@ -34,8 +34,8 @@ export class RegisterComponent {
     let inputbody = {
       username: String(formValue.userName),
       email: String(formValue.email),
+      contactNo: String(formValue.contactNo),
       password: String(formValue.password),
-      role: String(formValue.role)
     }
     this.authService.signup(inputbody).subscribe({
       next: (response: any) => {
