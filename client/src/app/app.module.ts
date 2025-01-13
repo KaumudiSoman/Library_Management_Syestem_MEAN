@@ -32,7 +32,8 @@ import { WishlistComponent } from './components/wishlist/wishlist.component';
 import { BookshelfComponent } from './components/bookshelf/bookshelf.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { ResetPasswordComponent } from './components/user-authentication/reset-password/reset-password.component';
-import { PaymentComponent } from './components/payment/payment.component'; 
+import { PaymentComponent } from './components/payment/payment.component';
+import { PaymentStatusComponent } from './components/payment-status/payment-status.component'; 
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { PaymentComponent } from './components/payment/payment.component';
     BookshelfComponent,
     LandingComponent,
     ResetPasswordComponent,
-    PaymentComponent
+    PaymentComponent,
+    PaymentStatusComponent
   ],
   imports: [
     CommonModule,

@@ -25,6 +25,7 @@ export const APIResources = {
 
     payment: '/payment',
     order: '/order',
+    status: 'status',
 
     q: '?q=',
     projection: '&projection=lite',

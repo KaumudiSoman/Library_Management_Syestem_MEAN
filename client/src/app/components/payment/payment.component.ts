@@ -16,6 +16,7 @@ export class PaymentComponent implements OnInit {
   cashfree: any;
   version: any;
   sessionId: String = '';
+  orderId: String = '';
 
   // loggedInUser: any;
 
@@ -39,7 +40,9 @@ export class PaymentComponent implements OnInit {
     this.paymentService.getSessionId(inputbody).subscribe({
       next: (response: any) => {
         this.sessionId = JSON.parse(JSON.stringify(response.payment_session_id));
+        this.orderId = JSON.parse(JSON.stringify(response.order_id));
         console.log(this.sessionId);
+        console.log(this.orderId);
       },
       error: (error) => {
         this.toastrService.error(error.message);
@@ -47,40 +50,13 @@ export class PaymentComponent implements OnInit {
     });
   }
 
-  // initiatePayment() {
-  //   if (!this.cashfree) {
-  //     console.error('Cashfree is not initialized');
-  //     return;
-  //   }
-
-  //   // Example: Simulate a payment initiation
-  //   this.cashfree.initialRequest(
-  //     {
-  //       order_id: 'order_12345',
-  //       order_amount: 500,
-  //       customer_details: {
-  //         customer_name: 'John Doe',
-  //         customer_email: 'john.doe@example.com',
-  //         customer_phone: '9876543210',
-  //       },
-  //     },
-  //     (response: any) => {
-  //       if (response.status === 'OK') {
-  //         console.log('Payment successfully initiated', response);
-  //       } else {
-  //         console.error('Payment initiation failed', response);
-  //       }
-  //     }
-  //   );
-  // }
-
   handlePayment() {
     let checkoutOptions = {
       paymentSessionId: this.sessionId,
       returnUrl:
-        "http://localhost:3000/api/payment/status/{order_id}",
+        `http://localhost:3000/api/payment/status/${this.orderId}`,
     };
-    this.cashfree.checkout(checkoutOptions).then(function (result: any) {
+    this.cashfree.checkout(checkoutOptions).then( (result: any) => {
       if (result.error) {
         alert(result.error.message);
       }
