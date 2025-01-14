@@ -48,7 +48,7 @@ export class PaymentComponent implements OnInit {
       username: this.loggedInUser.username,
       email: this.loggedInUser.email,
       contactNo: this.loggedInUser.contactNo,
-      duration: String(formValue.duration)
+      duration: Number(formValue.duration)
     }
     console.log(inputbody);
 

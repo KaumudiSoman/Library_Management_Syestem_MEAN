@@ -10,7 +10,10 @@ Cashfree.XEnvironment = Cashfree.CFEnvironment.SANDBOX;
 exports.createOrder = async (req, res) => {
     try {
         let amount = 0;
-        if(req.body.duration == '6') {
+        const user = await User.findById(req.body.userId);
+        user.membershipDuration = req.body.duration;
+        user.save();
+        if(req.body.duration == 6) {
             amount = 500;
         }
         else {
@@ -73,32 +76,71 @@ exports.checkStatus = async (req, res) => {
             }
         };
 
-        axios
-        .request(options)
-        .then(async function (response) {
-            console.log(response.data);
+        const response = await axios.request(options);
+        console.log(response.data);
             if(response.data.order_status === "PAID"){
-                const user = await User.findById(response.data.customer_id);
+                console.log(response.data.customer_details.customer_id);
+                const user = await User.findById(response.data.customer_details.customer_id);
                 user.isMember = true;
+                user.memberAt = Date.now();
+
+                if(user.membershipDuration == 6) {
+                    user.membershipExpiry = new Date(new Date(user.memberAt).setMonth(new Date(user.memberAt).getMonth() + 6)); 
+                }
+                else {
+                    user.membershipExpiry = new Date(new Date(user.memberAt).setMonth(new Date(user.memberAt).getFullYear() + 1)); 
+                }
                 user.save();
+
                 return res.redirect('http://localhost:4200/payment-success');
-            } else if(response.data.order_status === "ACTIVE"){
+            }
+            else if(response.data.order_status === "ACTIVE"){
                 return res.status(200).json({
                     status: 'pending',
                     message: 'Payment is pending or in progress.',
                 });
-            } else{
+            }
+            else{
                 return res.redirect('http://localhost:4200/payment-failure');
             }
-        })
-        .catch(function (error) {   
-            return console.error(error);
-        });
+        // axios
+        // .request(options)
+        // .then(async function (response) {
+        //     console.log(response.data);
+        //     if(response.data.order_status === "PAID"){
+        //         console.log(response.data.customer_id);
+        //         const user = await User.findById(response.data.customer_id);
+        //         user.isMember = true;
+        //         user.memberAt = Date.now();
+
+        //         if(user.membershipDuration == 6) {
+        //             user.membershipExpiry = new Date(new Date(user.memberAt).setMonth(new Date(user.memberAt).getMonth() + 6)); 
+        //         }
+        //         else {
+        //             user.membershipExpiry = new Date(new Date(user.memberAt).setMonth(new Date(user.memberAt).getFullYear() + 1)); 
+        //         }
+        //         user.save();
+
+        //         return res.redirect('http://localhost:4200/payment-success');
+        //     }
+        //     else if(response.data.order_status === "ACTIVE"){
+        //         return res.status(200).json({
+        //             status: 'pending',
+        //             message: 'Payment is pending or in progress.',
+        //         });
+        //     }
+        //     else{
+        //         return res.redirect('http://localhost:4200/payment-failure');
+        //     }
+        // })
+        // .catch(function (error) {   
+        //     return console.error(error);
+        // });
        
     } catch (error) {
         res.status(500).json({
             status: 'fail',
-            message: err.message,
+            message: error.message,
         });
     }
 }

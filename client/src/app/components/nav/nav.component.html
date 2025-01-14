@@ -13,6 +13,9 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/explore" *ngIf="authService.user$ | async">Explore</a>
         </li>
+        <li class="nav-item" *ngIf="(authService.user$ | async) as currentUser">
+          <a class="nav-link" routerLink="/payment" *ngIf="!(currentUser.isMember)">Membership</a>
+        </li>
       </ul>
 
       <div class="d-flex justify-content-center align-items-center">
@@ -23,9 +26,10 @@
         <a class="dropdown-toggle text-light text-decoration-none" dropdownToggle>
           Welcome {{currentUser.username}}</a>
         <div class="dropdown-menu" *dropdownMenu>
-          <a class="dropdown-item" routerLink="/wishlist">Wishlist</a>
-          <a class="dropdown-item" routerLink="/bookshelf">Bookshelf</a>
+          <a class="dropdown-item" routerLink="/wishlist" *ngIf="currentUser.isMember">Wishlist</a>
+          <a class="dropdown-item" routerLink="/bookshelf" *ngIf="currentUser.isMember">Bookshelf</a>
           <a class="dropdown-item" (click)="logout()">Log Out</a>
+          <a class="dropdown-item text-danger">Delete Account</a>
         </div>
       </div>
     </div>

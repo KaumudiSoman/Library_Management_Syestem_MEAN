@@ -111,7 +111,25 @@ exports.verify = async(req, res, next) => {
         }
         next();
     } catch (err) {
-        res.status(500).json({
+        return res.status(500).json({
+            status: 'fail',
+            message: err.message
+        });
+    }
+}
+
+exports.isMember = async (req, res, next) => {
+    try {
+        if(!req.user || !req.user.isMember) {
+            return res.status(403).json({
+                status: 'fail',
+                message: 'Please become a member to proceed'
+            });
+        }
+        next();
+    }
+    catch (err) {
+        return res.status(500).json({
             status: 'fail',
             message: err.message
         });

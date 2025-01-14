@@ -73,7 +73,7 @@ export class BookDetailComponent implements OnInit {
         this.toastrService.success('Book added to the wishlist')
       },
       error: err => {
-        this.toastrService.error(err.message)
+        this.toastrService.error(err.error.message)
       }
     })
   }
@@ -84,7 +84,7 @@ export class BookDetailComponent implements OnInit {
         this.toastrService.success('Book borrowed successfully')
       },
       error: err => {
-        this.toastrService.error(err.message);
+        this.toastrService.error(err.error.message);
       }
     })
   }
@@ -99,7 +99,7 @@ export class BookDetailComponent implements OnInit {
         this.toastrService.success(message);
       },
       error: (err) => {
-        this.toastrService.error(err.message);
+        this.toastrService.error(err.error.message);
       }
     })
   }
@@ -127,7 +127,7 @@ export class BookDetailComponent implements OnInit {
         this.getReviews();
       },
       error: (err) => {
-        this.toastrService.error(err.message);
+        this.toastrService.error(err.error.message);
       }
     })
   }

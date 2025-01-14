@@ -10,9 +10,17 @@ import { APIResources } from '../app.constants';
 })
 export class AuthService {
 
-  constructor(private router: Router, private http: HttpClient) { }
+  constructor(private router: Router, private http: HttpClient) {
+    const storedUser = localStorage.getItem('currentUser');
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      this.currentUserSource.next(user);
+    }
+  }
 
-  private currentUserSource = new BehaviorSubject<User | null>(null);
+  private currentUserSource = new BehaviorSubject<User | null>(
+    JSON.parse(localStorage.getItem('currentUser') || 'null')
+  );
   user$ = this.currentUserSource.asObservable();
 
   currentUser: User = {} as User;
@@ -54,6 +62,11 @@ export class AuthService {
 
   setCurrentUser(user: User | null) {
     this.currentUserSource.next(user);
+    if (user) {
+      localStorage.setItem('currentUser', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('currentUser');
+    }
   }
 
   getCurrentUser() {
@@ -64,6 +77,15 @@ export class AuthService {
     })
     console.log('account service, get current user : ', this.currentUser)
     return this.currentUser;
+  }
+
+  updateMembershipStatus(isMember: boolean): void {
+    const currentUser = this.currentUserSource.value;
+    if (currentUser) {
+      const updatedUser = { ...currentUser, isMember };
+      // this.currentUserSource.next(updatedUser);
+      this.setCurrentUser(updatedUser)
+    }
   }
 
   verifyEmail(token: string) {

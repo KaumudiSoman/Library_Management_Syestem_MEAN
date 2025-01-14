@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.route('/:id')
     .get(authController.protect, authController.verify, reviewController.getReviews)
-    .post(authController.protect, authController.verify, reviewController.createReview)
+    .post(authController.protect, authController.verify, authController.isMember, reviewController.createReview)
 
 module.exports = router;

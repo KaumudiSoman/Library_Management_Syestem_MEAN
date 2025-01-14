@@ -42,6 +42,15 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    membershipDuration: {
+        type: Number
+    },
+    memberAt: {
+        type: Date
+    },
+    membershipExpiry: {
+        type: Date
+    }
 });
 
 userSchema.pre('save', async function(next) {
@@ -51,6 +60,10 @@ userSchema.pre('save', async function(next) {
 
     next();
 });
+
+userSchema.methods.correctPassword = async function(candidatePassword, userPassword) {
+    return await bcrypt.compare(candidatePassword, userPassword);
+}
 
 const User = mongoose.model('User', userSchema);
 

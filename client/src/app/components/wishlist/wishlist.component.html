@@ -8,7 +8,7 @@
                 <h4>{{book.title}} <span class="author-name">by {{book.author}}</span></h4>
                 <h6>published by {{book.publisher}}</h6>
                 <p>{{book.description}}</p>
-                <p><strong>{{book.ratings}}</strong></p>
+                <p>Rating: <strong>{{book.ratings}}</strong></p>
                 <div class="buttons">
                     <button type="button" class="btn btn-link" (click)="gotoBookDetail(book._id)">View Details</button>
                     <button class="btn btn-outline-danger" (click)="deleteFromWishlist(book._id)"><i class="fa fa-trash"></i></button>

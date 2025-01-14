@@ -31,5 +31,9 @@ export interface User {
     _id: string;
     username: string;
     email: string;
-    role: string
+    role: string;
+    contatctNo: string;
+    isVerified: Boolean;
+    isMember: Boolean;
+    createdAt: Date;
 }
