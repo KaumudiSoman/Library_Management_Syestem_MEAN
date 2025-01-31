@@ -71,10 +71,6 @@ exports.protect = async (req, res, next) => {
         console.log(token);
     }
 
-    // if (req.cookies.jwt) {
-    //     token = req.cookies.jwt;
-    // }
-
     if(!token) {
         // return res.redirect('/api/users/login');
         return res.status(401).json({

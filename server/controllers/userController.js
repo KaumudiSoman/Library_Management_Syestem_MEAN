@@ -3,11 +3,6 @@ const User = require('./../models/userModel');
 exports.getAllUsers = async (req, res) => {
     try {
         const users = await User.find();
-        // res.render('viewUsers', {
-        //     results: users.length,
-        //     users: users,
-        //     loggedInUser: req.user
-        // });
         res.status(200).json({
             status: 'success',
             data: {
@@ -34,10 +29,6 @@ exports.getUser = async (req, res) => {
             });
         }
 
-        // res.render('userDetails', {
-        //     user: user,
-        //     loggedInUser: req.user
-        // });
         res.status(200).json({
             status: 'success',
             data: {

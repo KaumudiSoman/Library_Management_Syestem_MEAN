@@ -103,39 +103,6 @@ exports.checkStatus = async (req, res) => {
             else{
                 return res.redirect('http://localhost:4200/payment-failure');
             }
-        // axios
-        // .request(options)
-        // .then(async function (response) {
-        //     console.log(response.data);
-        //     if(response.data.order_status === "PAID"){
-        //         console.log(response.data.customer_id);
-        //         const user = await User.findById(response.data.customer_id);
-        //         user.isMember = true;
-        //         user.memberAt = Date.now();
-
-        //         if(user.membershipDuration == 6) {
-        //             user.membershipExpiry = new Date(new Date(user.memberAt).setMonth(new Date(user.memberAt).getMonth() + 6)); 
-        //         }
-        //         else {
-        //             user.membershipExpiry = new Date(new Date(user.memberAt).setMonth(new Date(user.memberAt).getFullYear() + 1)); 
-        //         }
-        //         user.save();
-
-        //         return res.redirect('http://localhost:4200/payment-success');
-        //     }
-        //     else if(response.data.order_status === "ACTIVE"){
-        //         return res.status(200).json({
-        //             status: 'pending',
-        //             message: 'Payment is pending or in progress.',
-        //         });
-        //     }
-        //     else{
-        //         return res.redirect('http://localhost:4200/payment-failure');
-        //     }
-        // })
-        // .catch(function (error) {   
-        //     return console.error(error);
-        // });
        
     } catch (error) {
         res.status(500).json({

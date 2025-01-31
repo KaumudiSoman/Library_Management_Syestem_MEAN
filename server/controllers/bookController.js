@@ -10,11 +10,6 @@ exports.getAllBooks = async (req, res) => {
                 books
             }
         });
-        // res.render('viewBooks', {
-        //     results: books.length,
-        //     books: books,
-        //     loggedInUser: req.user
-        // });
     }
     catch (err) {
         res.status(500).json({
@@ -58,10 +53,6 @@ exports.getBook = async (req, res) => {
             });
         }
 
-        // res.render('bookDetails', {
-        //     book: book,
-        //     loggedInUser: req.user
-        // });
         res.status(200).json({
             status: 'success',
             data: {

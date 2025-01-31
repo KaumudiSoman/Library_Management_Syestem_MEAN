@@ -113,11 +113,6 @@ exports.getMyBookHistory = async (req, res) => {
             });
         }
 
-        // return res.render('myBooks', {
-        //     results: borrows.length,
-        //     borrows: borrows,
-        //     loggedInUser: req.user
-        // });
         return res.status(200).json({
             status: 'success',
             data: {

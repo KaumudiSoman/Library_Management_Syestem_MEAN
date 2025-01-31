@@ -46,7 +46,6 @@ exports.createWishlistRecord = async (req, res) => {
 }
 
 exports.deleteWishlistRecord = async (req, res) => {
-    // const bookId = new mongoose.Types.ObjectId(req.params.id);
     try {
         console.log(req.params.id)
         const book = await Wishlist.findOneAndDelete({ bookId: req.params.id });

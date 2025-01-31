@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 const User = require('./../models/userModel');
 
 exports.sendEmail = async(receiver, subject, message) => {
-    // const { receiver, subject, message } = req.body
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         secure: true,
@@ -21,18 +20,10 @@ exports.sendEmail = async(receiver, subject, message) => {
     }
 
     try {
-        await transporter.sendMail(mailbody)
-        // return res.status(200).json({
-        //     status: 'success',
-        //     message: 'Email sent successfully'
-        // });
+        await transporter.sendMail(mailbody);
     }
     catch (err) {
-        throw new Error(err)
-        // return res.status(500).json({
-        //     status: 'fail',
-        //     message: err.message
-        // });
+        throw new Error(err);
     }
 }
 
