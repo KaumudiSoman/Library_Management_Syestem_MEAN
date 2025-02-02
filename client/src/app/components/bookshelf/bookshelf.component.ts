@@ -48,6 +48,8 @@ export class BookshelfComponent {
           book['dueDate'] = borrowedBook.dueDate
           book['returnTimestamp'] = borrowedBook.returnTimestamp
           book['status'] = borrowedBook.status
+          book['overdueDuration'] = borrowedBook.overdueDuration
+          book['isLate'] = borrowedBook.isLate
           this.books.push(response.data.book)
         }
       })
@@ -62,9 +64,12 @@ export class BookshelfComponent {
 
   returnBook(bookId: string) {
     this.bookshelfService.returnBook(bookId).subscribe({
-      next: () => {
+      next: (response: any) => {
         this.toastrService.success('Book returned successfully');
-        this.getBorrowedBooks()
+        if(response.data.borrowed.isLate) {
+          this.toastrService.info('Book is returned late. Please pay the fine.');
+        }  
+        this.getBorrowedBooks();
       },
       error: err => {
         this.toastrService.error(err.message.message)

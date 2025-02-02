@@ -24,7 +24,9 @@ export interface BorrowedBook {
     issuedTimestamp: Date,
     dueDate: Date,
     returnTimestamp: Date,
-    status: string
+    status: string,
+    overdueDuration: number,
+    isLate: boolean,
 }
 
 export interface User {

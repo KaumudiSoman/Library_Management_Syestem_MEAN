@@ -13,6 +13,10 @@
                 <div class="buttons" *ngIf="book.status !== 'RETURNED'">
                     <button class="btn btn-success" (click)="returnBook(book._id)">Return</button>
                 </div>
+                <div class="buttons" *ngIf="book.isLate">
+                    <button class="btn btn-danger">Pay Fine</button>
+                    <p>Delay by: {{book.overdueDuration}} days</p>
+                </div>
                 <div class="buttons">
                     <button class="btn btn-link" (click)="gotoBookDetail(book._id)">View Details</button>
                 </div>

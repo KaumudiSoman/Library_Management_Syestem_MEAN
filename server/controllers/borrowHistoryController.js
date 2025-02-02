@@ -13,6 +13,17 @@ exports.borrowBook = async (req, res) => {
             });
         }
 
+        //Check for balance late fee payement
+        const prevOverdues = await BorrowHistory.findOne({
+            userId: req.user._id, isLate: true
+        });
+        if(prevOverdues) {
+            return res.status(403).json({
+                status: "fail",
+                message: "Please pay previous overdues."
+            });
+        }
+
         //Reduce the quantity of the book by 1 after borrowing
         book.quantity -= 1;
         await book.save();        
@@ -83,7 +94,18 @@ exports.returnBook = async (req, res) => {
 
         //Change the status of borrow record to RETURNED and set the return timestamp
         borrowed.status = 'RETURNED';
-        borrowed.returnTimestamp = Date.now();
+        const returnTimestamp = Date.now();
+        borrowed.returnTimestamp = returnTimestamp;
+
+        //Calulate the delay in return
+        if(borrowed.dueDate < returnTimestamp) {
+            const overdueDuration = Math.floor((returnTimestamp - borrowed.dueDate) / (1000 * 60 * 60 * 24)); // in days
+            if(overdueDuration > 0) {
+                borrowed.isLate = true;
+                borrowed.overdueDuration = overdueDuration
+            }
+        }
+
         await borrowed.save();
 
         return res.status(200).json({

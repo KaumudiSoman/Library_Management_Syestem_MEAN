@@ -28,6 +28,10 @@ const borrowHistorySchema = new mongoose.Schema({
     overdueDuration: {
         type: Number,
         default: 0
+    },
+    isLate: {
+        type: Boolean,
+        default: false
     }
 });
 
