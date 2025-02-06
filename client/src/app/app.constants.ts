@@ -6,8 +6,8 @@ export const APIResources = {
     signup: '/signup',
     logout: '/logout',
     verification: '/verification',
-    forgotPassword: '/forgotPassword',
-    resetPassword: '/resetPassword',
+    forgotPassword: '/forgot-password',
+    resetPassword: '/reset-password',
 
     books: '/books',
     // getAndCreateBooks: '/',
@@ -18,12 +18,14 @@ export const APIResources = {
 
     wishlist: '/wishlist',
 
-    avgRating: 'avgRating',
+    avgRating: 'avg-rating',
     rate: '/rate',
 
     reviews: '/reviews',
 
     payment: '/payment',
+    membership: '/membership',
+    lateFee: '/late-fee',
     order: '/order',
     status: 'status',
 

@@ -9,8 +9,8 @@ router.route('/signup').post(authController.signup);
 router.get('/verification/:token', emailController.verifyEmail);
 router.route('/login').post(authController.login);
 router.route('/logout').get(authController.logout);
-router.post('/forgotPassword', authController.forgotPassword);
-router.post('/resetPassword/:token', authController.resetPassword);
+router.post('/forgot-password', authController.forgotPassword);
+router.post('/reset-password/:token', authController.resetPassword);
 
 router.route('/').get(authController.protect, authController.verify, authController.hasPermission('LIBRARIAN'), userController.getAllUsers);
 router.route('/:id')

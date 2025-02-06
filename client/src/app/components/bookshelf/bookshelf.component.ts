@@ -6,6 +6,11 @@ import { Book, BorrowedBook } from 'src/app/_models/BookDataModels';
 import { AuthService } from 'src/app/_services/auth.service';
 import { BookService } from 'src/app/_services/book.service';
 import { BookshelfService } from 'src/app/_services/bookshelf.service';
+import { PaymentService } from 'src/app/_services/payment.service';
+import { UtilService } from 'src/app/_services/util.service';
+import { environment } from 'src/environments/environment';
+
+declare var Cashfree: any;
 
 @Component({
   selector: 'app-bookshelf',
@@ -19,12 +24,24 @@ export class BookshelfComponent {
   itemsPerPage: number = 10;
   totalItems: number = 0;
 
+  cashfree: any;
+  version: any;
+  sessionId: String = '';
+  orderId: String = '';
+
+  loggedInUser: any;
+
   constructor(private bookshelfService: BookshelfService, private bookService: BookService, private router: Router,
-    private toastrService: ToastrService
+    private toastrService: ToastrService, private authService: AuthService, private paymentService: PaymentService,
+    private utilService: UtilService
   ) { }
 
   ngOnInit(): void {
     this.getBorrowedBooks();
+    this.cashfree = Cashfree({
+      mode: environment.cashfreeMode,
+    });
+    this.loggedInUser = this.authService.getCurrentUser();
   }
 
   getBorrowedBooks() {
@@ -74,7 +91,49 @@ export class BookshelfComponent {
       error: err => {
         this.toastrService.error(err.message.message)
       }
-    })
+    });
+  }
+
+  payLateFee(book: any) {
+    let inputbody= {
+      overdueDuration: book.overdueDuration,
+      bookId: book.bookId
+    }
+    console.log(inputbody);
+
+    this.paymentService.getSessionIdForLateFee(inputbody).subscribe({
+      next: (response: any) => {
+        this.sessionId = JSON.parse(JSON.stringify(response.payment_session_id));
+        this.orderId = JSON.parse(JSON.stringify(response.order_id));
+        this.handlePayment(book._id);
+      },
+      error: (error) => {
+        this.toastrService.error(error.message);
+      }
+    });
+  }
+
+  handlePayment(bookId: string) {
+    const inputbody = {
+      orderId: this.orderId,
+      bookId: bookId,
+      userId: this.loggedInUser._id
+    }
+    const queryParams = new URLSearchParams({ inputbody: JSON.stringify(inputbody) });
+    let checkoutOptions = {
+      paymentSessionId: this.sessionId,
+      returnUrl:
+        `http://localhost:3000/api/payment/late-fee/status?orderId=${this.orderId}&bookId=${bookId}&userId=${this.loggedInUser._id}`,
+      // bookId: bookId,
+    };
+    this.cashfree.checkout(checkoutOptions).then( (result: any) => {
+      if (result.error) {
+        alert(result.error.message);
+      }
+      if (result.redirect) {
+        console.log("Redirection");
+      }
+    });
   }
 
   pageChanged(event: PageChangedEvent): void {

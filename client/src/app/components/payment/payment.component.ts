@@ -45,14 +45,11 @@ export class PaymentComponent implements OnInit {
     const formValue = this.durationForm.value;
     let inputbody= {
       userId: this.loggedInUser._id,
-      username: this.loggedInUser.username,
-      email: this.loggedInUser.email,
-      contactNo: this.loggedInUser.contactNo,
       duration: Number(formValue.duration)
     }
     console.log(inputbody);
 
-    this.paymentService.getSessionId(inputbody).subscribe({
+    this.paymentService.getSessionIdForMembership(inputbody).subscribe({
       next: (response: any) => {
         this.sessionId = JSON.parse(JSON.stringify(response.payment_session_id));
         this.orderId = JSON.parse(JSON.stringify(response.order_id));
@@ -68,7 +65,7 @@ export class PaymentComponent implements OnInit {
     let checkoutOptions = {
       paymentSessionId: this.sessionId,
       returnUrl:
-        `http://localhost:3000/api/payment/status/${this.orderId}`,
+        `http://localhost:3000/api/payment/membership/status/${this.orderId}`,
     };
     this.cashfree.checkout(checkoutOptions).then( (result: any) => {
       if (result.error) {
