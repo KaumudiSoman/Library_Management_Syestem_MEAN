@@ -32,8 +32,7 @@ export class BookshelfComponent {
   loggedInUser: any;
 
   constructor(private bookshelfService: BookshelfService, private bookService: BookService, private router: Router,
-    private toastrService: ToastrService, private authService: AuthService, private paymentService: PaymentService,
-    private utilService: UtilService
+    private toastrService: ToastrService, private authService: AuthService, private paymentService: PaymentService
   ) { }
 
   ngOnInit(): void {
@@ -49,9 +48,7 @@ export class BookshelfComponent {
       next: (response: any) => {
         console.log(response)
         this.borrowedBooks = JSON.parse(JSON.stringify(response.data.borrows));
-        this.getBooks()
-        this.totalItems = this.borrowedBooks.length;
-        this.pageChanged({page: 1, itemsPerPage: this.itemsPerPage});
+        this.getBooks();
       }
     })
   }
@@ -68,6 +65,8 @@ export class BookshelfComponent {
           book['overdueDuration'] = borrowedBook.overdueDuration
           book['isLate'] = borrowedBook.isLate
           this.books.push(response.data.book)
+          this.totalItems = this.borrowedBooks.length;
+          this.pageChanged({page: 1, itemsPerPage: this.itemsPerPage});
         }
       })
     })

@@ -1,5 +1,9 @@
 <div class="container text-center">
-    <div *ngFor="let book of books" class="books-container">
+    <h2 class="text-primary-emphasis">BookScout</h2>
+    <h6 class="text-secondary-emphasis">Discover Your Next Great Read</h6>
+    <hr>
+
+    <div *ngFor="let book of paginatedData" class="books-container">
         <div class="book-tile">
             <div class="book-img">
                 <img [src]="book.thumbnail || '../../../../../assets/images/book-cover.gif'" alt="Thumbnail not available">
@@ -25,9 +29,9 @@
     </div>
 
     <div class="d-flex justify-content-center mt-3">
-        <!-- <pagination [boundaryLinks]="true" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [maxSize]="10"
+        <pagination [boundaryLinks]="true" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [maxSize]="10"
             previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" (pageChanged)="pageChanged($event)">
-        </pagination> -->
+        </pagination>
     </div>
 </div>
 <div class="container text-center" *ngIf="!borrowedBooks || borrowedBooks.length === 0">Bookshelf is empty</div>

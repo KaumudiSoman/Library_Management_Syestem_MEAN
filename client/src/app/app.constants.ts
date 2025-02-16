@@ -10,6 +10,7 @@ export const APIResources = {
     resetPassword: '/reset-password',
 
     books: '/books',
+    search: '/search',
     // getAndCreateBooks: '/',
 
     mybooks: '/mybooks',

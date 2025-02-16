@@ -13,4 +13,6 @@ router.route('/:id')
     .patch(authController.protect, authController.verify, authController.hasPermission('LIBRARIAN'), bookController.updateBook)
     .delete(authController.protect, authController.verify, authController.hasPermission('LIBRARIAN'), bookController.deleteBook);
 
+router.route('/search').post(authController.protect, authController.verify, bookController.searchBooks);
+
 module.exports = router;

@@ -18,6 +18,9 @@ export class WishlistComponent implements OnInit {
   totalItems: number = 0;
   wishlist: any[] = []
 
+  expandedBooks: { [key: string]: boolean } = {};
+  maxLength: number = 500;
+
   userId: string = '';
 
   constructor(private wishlistService: WishlistService, private authService: AuthService, private bookService: BookService,
@@ -36,9 +39,6 @@ export class WishlistComponent implements OnInit {
       next: (response: any) => {
         this.wishlist = JSON.parse(JSON.stringify(response.wishlist));
         this.getBooks()
-        
-        this.totalItems = this.books.length;
-        this.pageChanged({page: 1, itemsPerPage: this.itemsPerPage});
       }
     })
   }
@@ -53,7 +53,9 @@ export class WishlistComponent implements OnInit {
     this.wishlist.forEach(record => {
       this.bookService.getBook(record.bookId).subscribe({
         next: (response: any) => {
-          this.books.push(response.data.book)
+          this.books.push(response.data.book);
+          this.totalItems = this.books.length;
+          this.pageChanged({page: 1, itemsPerPage: this.itemsPerPage});
         }
       })
     })
@@ -63,6 +65,14 @@ export class WishlistComponent implements OnInit {
   gotoBookDetail(bookId: string) {
     console.log(bookId);
     this.router.navigate([`/book-detail/${bookId}`]);
+  }
+
+  toggleContent(bookId: string) {
+    this.expandedBooks[bookId] = !this.expandedBooks[bookId];
+  }
+
+  isExpanded(bookId: string): boolean {
+    return !!this.expandedBooks[bookId];
   }
 
   pageChanged(event: PageChangedEvent): void {

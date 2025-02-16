@@ -31,4 +31,9 @@ export class BookService {
     const headers = this.utilService.setAuthHeader();
     return this.http.delete(APIResources.baseUrl + APIResources.books + `/${bookId}`, {headers});
   }
+
+  searchBooks(inputbody: any) {
+    const headers = this.utilService.setAuthHeader();
+    return this.http.post(APIResources.baseUrl + APIResources.books + APIResources.search, inputbody, {headers});
+  } 
 }

@@ -117,3 +117,38 @@ exports.deleteBook = async (req, res) => {
         });
     }
 };
+
+exports.searchBooks = async (req, res) => {
+    try {
+        const { criteria, query } = req.body;
+        
+        let filter;
+        if(criteria == 'author' || criteria == 'title' || criteria == 'genres') {
+            filter = { [criteria]: { $regex: query, $options: 'i' } };
+        }
+        else if(criteria == 'ratings') {
+            const rating = Number(query);
+            console.log(rating);
+            filter = { ratings: { $gte: rating } };
+        }
+
+        const books = await Book.find(filter);
+        if(!books) {
+            return res.send(404).json({
+                status: 'fail',
+                message: "Query doesn't match any results"
+            });
+        }
+
+        return res.status(200).json({
+            status: 'succsess',
+            books
+        });
+    }
+    catch (err) {
+        return res.status(500).json({
+            status: 'fail',
+            message: err.message
+        });
+    }
+}

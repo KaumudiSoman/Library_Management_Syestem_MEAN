@@ -1,10 +1,24 @@
 <!-- <app-login *ngIf="!(authService.user$ | async)"></app-login> -->
 <div class="container text-center" *ngIf="authService.user$ | async">
     <h2 class="text-primary-emphasis">BookScout</h2>
-    <h6 class="text-secondary-emphasis">Discover Your Next Great Read</h6>
+    <form [formGroup]="searchForm" (submit)="searchBooks()" class="search-div">
+        <div class="find-div">
+            <select class="form-select" formControlName="criteria">
+                <option selected value="title">Title</option>
+                <option value="author">Author</option>
+                <option value="ratings">Ratings</option>
+                <option value="genres">Genre</option>
+            </select>
+        </div>
+        <div class="input-group query-div">
+            <input type="text" class="form-control" formControlName="query" placeholder="Discover Your Next Great Read..." aria-describedby="button-addon2">
+            <button class="btn btn-outline-success" type="submit" id="button-addon2">Search</button>
+        </div>
+    </form>
+    
     <hr>
 
-    <div *ngFor="let book of books" class="books-container">
+    <div *ngFor="let book of paginatedData" class="books-container">
         <div class="book-tile">
             <div class="book-img">
                 <img [src]="book.thumbnail || '../../../../../assets/images/book-cover.gif'" alt="Thumbnail not available">
@@ -12,11 +26,26 @@
             <div class="book-info">
                 <h4>{{book.title}} <span class="author-name">by {{book.author}}</span></h4>
                 <h6>Available Copies {{book.quantity}}</h6>
-                <p>{{book.description}}</p>
+                <p>
+                    <span *ngIf="isExpanded(book._id); else truncatedContent">
+                        {{ book.description }} 
+                        <a class="read-more" (click)="toggleContent(book._id)">Read less</a>
+                    </span>
+                    <ng-template #truncatedContent>
+                        {{ book.description | slice:0:maxLength }}<span *ngIf="book.description.length > maxLength">...</span>
+                        <a *ngIf="book.description.length > maxLength" class="read-more" (click)="toggleContent(book._id)">Read more</a>
+                    </ng-template>
+                </p>
                 <div class="buttons">
                     <button type="button" class="btn btn-link" (click)="gotoBookDetail(book._id)">know more</button>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="d-flex justify-content-center mt-3">
+        <pagination [boundaryLinks]="true" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [maxSize]="10"
+            previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" (pageChanged)="pageChanged($event)">
+        </pagination>
     </div>
 </div>

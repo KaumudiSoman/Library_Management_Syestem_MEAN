@@ -1,5 +1,9 @@
 <div class="container text-center" *ngIf="books.length > 0">
-    <div *ngFor="let book of books" class="books-container">
+    <h2 class="text-primary-emphasis">BookScout</h2>
+    <h6 class="text-secondary-emphasis">Discover Your Next Great Read</h6>
+    <hr>
+
+    <div *ngFor="let book of paginatedData" class="books-container">
         <div class="book-tile">
             <div class="book-img">
                 <img [src]="book.thumbnail || '../../../../../assets/images/book-cover.gif'" alt="Thumbnail not available">
@@ -7,7 +11,16 @@
             <div class="book-info">
                 <h4>{{book.title}} <span class="author-name">by {{book.author}}</span></h4>
                 <h6>published by {{book.publisher}}</h6>
-                <p>{{book.description}}</p>
+                <p>
+                    <span *ngIf="isExpanded(book._id); else truncatedContent">
+                        {{ book.description }} 
+                        <a class="read-more" (click)="toggleContent(book._id)">Read less</a>
+                    </span>
+                    <ng-template #truncatedContent>
+                        {{ book.description | slice:0:maxLength }}<span *ngIf="book.description.length > maxLength">...</span>
+                        <a *ngIf="book.description.length > maxLength" class="read-more" (click)="toggleContent(book._id)">Read more</a>
+                    </ng-template>
+                </p>
                 <p>Rating: <strong>{{book.ratings}}</strong></p>
                 <div class="buttons">
                     <button type="button" class="btn btn-link" (click)="gotoBookDetail(book._id)">View Details</button>
@@ -18,9 +31,9 @@
     </div>
 
     <div class="d-flex justify-content-center mt-3" *ngIf="books.length > 0">
-        <!-- <pagination [boundaryLinks]="true" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [maxSize]="10"
+        <pagination [boundaryLinks]="true" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [maxSize]="10"
             previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" (pageChanged)="pageChanged($event)">
-        </pagination> -->
+        </pagination>
     </div>
 </div>
 <div class="container text-center" *ngIf="!books || books.length === 0">Wishlist is empty</div>
