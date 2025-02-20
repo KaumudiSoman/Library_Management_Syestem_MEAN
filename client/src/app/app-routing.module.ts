@@ -19,29 +19,26 @@ import { PaymentFailureComponent } from './components/payment-failure/payment-fa
 const routes: Routes = [
   // {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: '', component: LandingComponent},
-  {path: 'home', component: HomeComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'explore', component: SearchBookComponent},
-  {path: 'wishlist', component: WishlistComponent},
-  {path: 'bookshelf', component: BookshelfComponent},
-  {path: 'book-detail/:id', component: BookDetailComponent},
-  {path: 'forgot-password', component: ForgotPasswordComponent},
-  {path: 'verify-email/:token', component: VerifyEmailComponent},
-  {path: 'reset-password/:token', component: ResetPasswordComponent},
-  {path: 'payment', component: PaymentComponent},
-  {path: 'payment-success', component: PaymentSuccessComponent},
-  {path: 'payment-failure', component: PaymentFailureComponent},
-  // {path: '',
-  //   runGuardsAndResolvers: 'always',
-  //   canActivate: [AuthGuard],
-  //   children: [
-  //     {path: 'explore', component: SearchBookComponent},
-  //     {path: 'wishlist', component: WishlistComponent},
-  //     {path: 'bookshelf', component: BookshelfComponent},
-  //     {path: 'book-detail/:id', component: BookDetailComponent}
-  //   ]
-  // }
+  { path: '',
+    runGuardsAndResolvers: 'always',
+    canActivate: [AuthGuard],
+    children: [
+      {path: 'home', component: HomeComponent},
+      {path: 'explore', component: SearchBookComponent},
+      {path: 'wishlist', component: WishlistComponent},
+      {path: 'bookshelf', component: BookshelfComponent},
+      {path: 'book-detail/:id', component: BookDetailComponent},
+      {path: 'forgot-password', component: ForgotPasswordComponent},
+      {path: 'verify-email/:token', component: VerifyEmailComponent},
+      {path: 'reset-password/:token', component: ResetPasswordComponent},
+      {path: 'payment', component: PaymentComponent},
+      {path: 'payment-success', component: PaymentSuccessComponent},
+      {path: 'payment-failure', component: PaymentFailureComponent},
+    ]
+  },
+  
 ];
 
 @NgModule({
