@@ -1,5 +1,5 @@
 export const APIResources = {
-    baseUrl: 'http://localhost:3000/api',
+    baseUrl: 'http://3.109.2.11:3000/api',
     users: '/users',
     
     login: '/login',
