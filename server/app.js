@@ -14,10 +14,11 @@ const paymentRouter = require('./routes/paymentRoutes');
 
 const app = express();
 
-// app.set('view engine', 'ejs');
-// app.set('views', path.resolve('./views'));
+app.use(cors({
+  origin: ['http://localhost:4200', 'http://3.109.2.11'],
+  credentials: true
+}));
 
-app.use(cors({origin: 'http://localhost:4200', credentials: true}));
 app.options('*', cors());
 
 app.use(express.urlencoded({ extended: true }));
