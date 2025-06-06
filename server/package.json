@@ -4,7 +4,8 @@
   "description": "a library management system",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node server.js",
+    "run dev": "nodemon server.js"
   },
   "author": "Kaumudi Soman",
   "license": "ISC",
