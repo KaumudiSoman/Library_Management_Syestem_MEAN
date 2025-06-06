@@ -23,7 +23,7 @@ exports.signup = async (req, res) => {
 
         const token = signInToken(newUser._id);
         emailController.sendEmail(req.body.email, 'Email Verification', 
-            `Please click on following link to verify your email http://localhost:4200/verify-email/${token}`)
+            `Please click on following link to verify your email http://3.109.2.11/verify-email/${token}`)
 
         res.status(201).json({
             status: 'success',
@@ -144,7 +144,7 @@ exports.forgotPassword = async(req, res) => {
 
         const token = passwordResetToken(user._id);
         emailController.sendEmail(req.body.email, 'Email Verification', 
-            `Please click on following link to verify your email http://localhost:4200/reset-password/${token}`);
+            `Please click on following link to verify your email http://3.109.2.11/reset-password/${token}`);
         
         return res.status(200).json({
             status: 'success',

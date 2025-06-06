@@ -93,7 +93,7 @@ exports.checkStatusForMembership = async (req, res) => {
                 }
                 user.save();
 
-                return res.redirect('http://localhost:4200/payment-success');
+                return res.redirect('http://3.109.2.11/payment-success');
             }
             else if(response.data.order_status === "ACTIVE"){
                 return res.status(200).json({
@@ -102,7 +102,7 @@ exports.checkStatusForMembership = async (req, res) => {
                 });
             }
             else{
-                return res.redirect('http://localhost:4200/payment-failure');
+                return res.redirect('http://3.109.2.11/payment-failure');
             }
        
     } catch (error) {

@@ -65,7 +65,7 @@ export class PaymentComponent implements OnInit {
     let checkoutOptions = {
       paymentSessionId: this.sessionId,
       returnUrl:
-        `http://localhost:3000/api/payment/membership/status/${this.orderId}`,
+        `http://3.109.2.11:3000/api/payment/membership/status/${this.orderId}`,
     };
     this.cashfree.checkout(checkoutOptions).then( (result: any) => {
       if (result.error) {
